@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[MMViewController viewDidLoad]:MMViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.audioPlayer.currentItem.duration">
+            </PersistentString>
+            <PersistentString
+               value = "self.sliderOutlet.maximumValue">
+            </PersistentString>
+            <PersistentString
+               value = "currentItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MMViewController updateView]:MMViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MMAudioManager setCurrentSong:]:MMAudioManager.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_currentSongTitle = [_currentSong valueForProperty: MPMediaItemPropertyTitle];">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MMViewController sliderDragged:]:MMViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "sliderOutlet">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

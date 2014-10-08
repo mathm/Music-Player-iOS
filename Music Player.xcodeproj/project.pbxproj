@@ -21,6 +21,23 @@
 		C73DB57E19C9DB0500BE1459 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C73DB56019C9DB0500BE1459 /* UIKit.framework */; };
 		C73DB58619C9DB0500BE1459 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C73DB58419C9DB0500BE1459 /* InfoPlist.strings */; };
 		C73DB58819C9DB0500BE1459 /* Music_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C73DB58719C9DB0500BE1459 /* Music_PlayerTests.m */; };
+		C73DB59519C9DBAB00BE1459 /* pause_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C73DB59119C9DBAB00BE1459 /* pause_button.png */; };
+		C73DB59619C9DBAB00BE1459 /* pause_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C73DB59219C9DBAB00BE1459 /* pause_button@2x.png */; };
+		C73DB59719C9DBAB00BE1459 /* play_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C73DB59319C9DBAB00BE1459 /* play_button.png */; };
+		C73DB59819C9DBAB00BE1459 /* play_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C73DB59419C9DBAB00BE1459 /* play_button@2x.png */; };
+		C73DB59B19C9E10D00BE1459 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C73DB59A19C9E10D00BE1459 /* CoreMedia.framework */; };
+		C73DB59D19C9E11B00BE1459 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C73DB59C19C9E11B00BE1459 /* AVFoundation.framework */; };
+		C73DB59F19C9E12700BE1459 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C73DB59E19C9E12700BE1459 /* MediaPlayer.framework */; };
+		C78B7F7A19DC1F920070447D /* MMCustomizePlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C78B7F7919DC1F920070447D /* MMCustomizePlaylistViewController.m */; };
+		C793215A19E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C793215919E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib */; };
+		C793215D19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */; };
+		C793216019E2D065006E4C8E /* MMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C793215F19E2D065006E4C8E /* MMTabBarController.m */; };
+		C7F3E5D519D4348E00220E81 /* MMAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F3E5D419D4348E00220E81 /* MMAudioManager.m */; };
+		C7F3E5D719D9898400220E81 /* blackbox.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7F3E5D619D9898400220E81 /* blackbox.jpg */; };
+		C7F3E5E219DAD79A00220E81 /* playlist_tab_bar_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F3E5DE19DAD79A00220E81 /* playlist_tab_bar_icon.png */; };
+		C7F3E5E319DAD79A00220E81 /* music_tab_bar_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F3E5DF19DAD79A00220E81 /* music_tab_bar_icon.png */; };
+		C7F3E5E619DAD9E100220E81 /* pause_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F3E5E419DAD9E100220E81 /* pause_icon.png */; };
+		C7F3E5E719DAD9E100220E81 /* play_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F3E5E519DAD9E100220E81 /* play_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +70,27 @@
 		C73DB58319C9DB0500BE1459 /* Music PlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Music PlayerTests-Info.plist"; sourceTree = "<group>"; };
 		C73DB58519C9DB0500BE1459 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C73DB58719C9DB0500BE1459 /* Music_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Music_PlayerTests.m; sourceTree = "<group>"; };
+		C73DB59119C9DBAB00BE1459 /* pause_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_button.png; sourceTree = "<group>"; };
+		C73DB59219C9DBAB00BE1459 /* pause_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause_button@2x.png"; sourceTree = "<group>"; };
+		C73DB59319C9DBAB00BE1459 /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_button.png; sourceTree = "<group>"; };
+		C73DB59419C9DBAB00BE1459 /* play_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_button@2x.png"; sourceTree = "<group>"; };
+		C73DB59A19C9E10D00BE1459 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		C73DB59C19C9E11B00BE1459 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C73DB59E19C9E12700BE1459 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C78B7F7819DC1F920070447D /* MMCustomizePlaylistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCustomizePlaylistViewController.h; sourceTree = "<group>"; };
+		C78B7F7919DC1F920070447D /* MMCustomizePlaylistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCustomizePlaylistViewController.m; sourceTree = "<group>"; };
+		C793215919E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerCustomizeGenreTableCell.xib; sourceTree = "<group>"; };
+		C793215B19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMusicPlayerCustomizeGenreTableViewCell.h; sourceTree = "<group>"; };
+		C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMusicPlayerCustomizeGenreTableViewCell.m; sourceTree = "<group>"; };
+		C793215E19E2D065006E4C8E /* MMTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTabBarController.h; sourceTree = "<group>"; };
+		C793215F19E2D065006E4C8E /* MMTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTabBarController.m; sourceTree = "<group>"; };
+		C7F3E5D319D4348E00220E81 /* MMAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAudioManager.h; sourceTree = "<group>"; };
+		C7F3E5D419D4348E00220E81 /* MMAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAudioManager.m; sourceTree = "<group>"; };
+		C7F3E5D619D9898400220E81 /* blackbox.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blackbox.jpg; sourceTree = "<group>"; };
+		C7F3E5DE19DAD79A00220E81 /* playlist_tab_bar_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playlist_tab_bar_icon.png; sourceTree = "<group>"; };
+		C7F3E5DF19DAD79A00220E81 /* music_tab_bar_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = music_tab_bar_icon.png; sourceTree = "<group>"; };
+		C7F3E5E419DAD9E100220E81 /* pause_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_icon.png; sourceTree = "<group>"; };
+		C7F3E5E519DAD9E100220E81 /* play_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +98,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73DB59F19C9E12700BE1459 /* MediaPlayer.framework in Frameworks */,
+				C73DB59D19C9E11B00BE1459 /* AVFoundation.framework in Frameworks */,
+				C73DB59B19C9E10D00BE1459 /* CoreMedia.framework in Frameworks */,
 				C73DB55F19C9DB0500BE1459 /* CoreGraphics.framework in Frameworks */,
 				C73DB56119C9DB0500BE1459 /* UIKit.framework in Frameworks */,
 				C73DB55D19C9DB0500BE1459 /* Foundation.framework in Frameworks */,
@@ -101,6 +142,9 @@
 		C73DB55B19C9DB0500BE1459 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C73DB59E19C9E12700BE1459 /* MediaPlayer.framework */,
+				C73DB59C19C9E11B00BE1459 /* AVFoundation.framework */,
+				C73DB59A19C9E10D00BE1459 /* CoreMedia.framework */,
 				C73DB55C19C9DB0500BE1459 /* Foundation.framework */,
 				C73DB55E19C9DB0500BE1459 /* CoreGraphics.framework */,
 				C73DB56019C9DB0500BE1459 /* UIKit.framework */,
@@ -115,8 +159,17 @@
 				C73DB56B19C9DB0500BE1459 /* MMAppDelegate.h */,
 				C73DB56C19C9DB0500BE1459 /* MMAppDelegate.m */,
 				C73DB56E19C9DB0500BE1459 /* Main.storyboard */,
+				C793215E19E2D065006E4C8E /* MMTabBarController.h */,
+				C793215F19E2D065006E4C8E /* MMTabBarController.m */,
 				C73DB57119C9DB0500BE1459 /* MMViewController.h */,
 				C73DB57219C9DB0500BE1459 /* MMViewController.m */,
+				C78B7F7819DC1F920070447D /* MMCustomizePlaylistViewController.h */,
+				C78B7F7919DC1F920070447D /* MMCustomizePlaylistViewController.m */,
+				C7F3E5D319D4348E00220E81 /* MMAudioManager.h */,
+				C7F3E5D419D4348E00220E81 /* MMAudioManager.m */,
+				C793215919E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib */,
+				C793215B19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.h */,
+				C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */,
 				C73DB57419C9DB0500BE1459 /* Images.xcassets */,
 				C73DB56319C9DB0500BE1459 /* Supporting Files */,
 			);
@@ -126,6 +179,7 @@
 		C73DB56319C9DB0500BE1459 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C73DB59919C9DBB000BE1459 /* Pictures */,
 				C73DB56419C9DB0500BE1459 /* Music Player-Info.plist */,
 				C73DB56519C9DB0500BE1459 /* InfoPlist.strings */,
 				C73DB56819C9DB0500BE1459 /* main.m */,
@@ -150,6 +204,22 @@
 				C73DB58419C9DB0500BE1459 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C73DB59919C9DBB000BE1459 /* Pictures */ = {
+			isa = PBXGroup;
+			children = (
+				C7F3E5D619D9898400220E81 /* blackbox.jpg */,
+				C7F3E5E419DAD9E100220E81 /* pause_icon.png */,
+				C7F3E5E519DAD9E100220E81 /* play_icon.png */,
+				C7F3E5DE19DAD79A00220E81 /* playlist_tab_bar_icon.png */,
+				C7F3E5DF19DAD79A00220E81 /* music_tab_bar_icon.png */,
+				C73DB59119C9DBAB00BE1459 /* pause_button.png */,
+				C73DB59219C9DBAB00BE1459 /* pause_button@2x.png */,
+				C73DB59319C9DBAB00BE1459 /* play_button.png */,
+				C73DB59419C9DBAB00BE1459 /* play_button@2x.png */,
+			);
+			name = Pictures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,8 +299,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C793215A19E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib in Resources */,
+				C73DB59519C9DBAB00BE1459 /* pause_button.png in Resources */,
+				C7F3E5D719D9898400220E81 /* blackbox.jpg in Resources */,
+				C73DB59719C9DBAB00BE1459 /* play_button.png in Resources */,
+				C7F3E5E319DAD79A00220E81 /* music_tab_bar_icon.png in Resources */,
+				C73DB59619C9DBAB00BE1459 /* pause_button@2x.png in Resources */,
+				C73DB59819C9DBAB00BE1459 /* play_button@2x.png in Resources */,
 				C73DB57519C9DB0500BE1459 /* Images.xcassets in Resources */,
+				C7F3E5E619DAD9E100220E81 /* pause_icon.png in Resources */,
+				C7F3E5E219DAD79A00220E81 /* playlist_tab_bar_icon.png in Resources */,
 				C73DB56719C9DB0500BE1459 /* InfoPlist.strings in Resources */,
+				C7F3E5E719DAD9E100220E81 /* play_icon.png in Resources */,
 				C73DB57019C9DB0500BE1459 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +332,10 @@
 			files = (
 				C73DB56D19C9DB0500BE1459 /* MMAppDelegate.m in Sources */,
 				C73DB57319C9DB0500BE1459 /* MMViewController.m in Sources */,
+				C7F3E5D519D4348E00220E81 /* MMAudioManager.m in Sources */,
+				C78B7F7A19DC1F920070447D /* MMCustomizePlaylistViewController.m in Sources */,
+				C793215D19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m in Sources */,
+				C793216019E2D065006E4C8E /* MMTabBarController.m in Sources */,
 				C73DB56919C9DB0500BE1459 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,9 +461,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music Player/Music Player-Prefix.pch";
 				INFOPLIST_FILE = "Music Player/Music Player-Info.plist";
+				OTHER_CODE_SIGN_FLAGS = "-gta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -390,9 +476,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music Player/Music Player-Prefix.pch";
 				INFOPLIST_FILE = "Music Player/Music Player-Info.plist";
+				OTHER_CODE_SIGN_FLAGS = "-gta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -457,6 +545,7 @@
 				C73DB58D19C9DB0500BE1459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C73DB58E19C9DB0500BE1459 /* Build configuration list for PBXNativeTarget "Music PlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +554,7 @@
 				C73DB59019C9DB0500BE1459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
