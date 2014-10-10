@@ -17,4 +17,6 @@
 
 @property (strong, nonatomic) MMGenreList *genreList;
 
+- (IBAction)buttonSetInitialPercentage:(id)sender;
+
 @end

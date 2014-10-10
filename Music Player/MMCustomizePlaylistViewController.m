@@ -14,8 +14,6 @@
 
 @interface MMCustomizePlaylistViewController ()
 
-@property (strong,nonatomic) NSMutableArray *tableSliderValuesArray;
-
 @end
 
 @implementation MMCustomizePlaylistViewController
@@ -46,14 +44,6 @@
     
     self.genreList = [[MMGenreList alloc]init];
    
-    // generate sliderValueArray
-    /*self.tableSliderValuesArray = [[NSMutableArray alloc]init];
-    
-    for(int i=0;i<self.genreList.count;i++)
-    {
-        NSNumber *value = [NSNumber numberWithInt:100/self.genreList.count];
-        [self.tableSliderValuesArray addObject:value];
-    }*/
     
     //generate genre list
     NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
@@ -144,33 +134,16 @@
         int tmpSliderValue = [genre percentage];
         tmp = tmp + tmpSliderValue;
     }
-    NSLog(@"TEMP: %i",tmp);
+
     // if the overall value is > 100, take the smalest value and reduce his value by 1
     while(tmp>100)
     {
+        // generate list ranking
         [self.genreList generateNewListRanking];
         
-        for (MMGenre *genre in self.genreList.genreList) {
-            NSLog(@"cellPosition:%li, percentage %i, rank %i",genre.cellPosition, genre.percentage, genre.rank);
-        }
-        
-        /*long cellPositionMinValue = 0;
-        for(int i=0; i<self.genreList.genreList.count;i++)
-        {
-            int tmpSliderValue = [[self.genreList.genreList objectAtIndex:i] percentage];
-            int minValueTmp = [[self.genreList.genreList objectAtIndex:cellPositionMinValue] percentage];
-
-            if(tmpSliderValue < minValueTmp && tmpSliderValue>0)
-                cellPositionMinValue = i;
-            
-            
-        }*/
         long cellPositionMinValue = 0;
-        /*for (int i=0; i<self.genreList.genreList.count; i++) {
-            if ([[self.genreList.genreList objectAtIndex:i] percentage]>0 && [[self.genreList.genreList objectAtIndex:i] cellPosition] != cellPosition) {
-                cellPositionMinValue = i;
-            }
-        }*/
+
+        //looking for genre with lowest rank to subtract redundant percentage from it
         BOOL breakOuterFor = false;
         for(int i=0;i<self.genreList.genreList.count;i++)
         {
@@ -188,10 +161,10 @@
             if(breakOuterFor) break;
         }
         
-        //NSNumber *minValueTmp = [NSNumber numberWithInt:[[self.tableSliderValuesArray objectAtIndex:cellPositionMinValue] intValue]];
         int minValue = [[self.genreList.genreList objectAtIndex:cellPositionMinValue] percentage];
         int newValue = 0;
         
+        //if its possible to subtract redundant percentage (dont shut be lower than zero)
         if (minValue-(tmp-100)>0) {
             newValue = minValue-(tmp-100);
             tmp = tmp - (tmp-100);
@@ -203,11 +176,21 @@
             if(minValue == 0 && newValue == 0)
                 break;
         }
-        //NSNumber *newValueTmp = [NSNumber numberWithInt:newValue];
-        //[self.tableSliderValuesArray replaceObjectAtIndex:cellPositionMinValue withObject:newValueTmp];
+
+        //set new percentage to genre
         [[self.genreList.genreList objectAtIndex:cellPositionMinValue] setPercentage:newValue];
     }
     
+    //update table data
+    [self.tableView reloadData];
+}
+
+/*
+ Button pressed, set genreList percentage to initial values (100/genreList.count)
+ */
+-(IBAction) buttonSetInitialPercentage:(id)sender
+{
+    [self.genreList setInitialPercentage];
     [self.tableView reloadData];
 }
 
@@ -226,4 +209,5 @@
 }
 
 */
+
 @end
