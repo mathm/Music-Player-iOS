@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4D037F55-565A-4CC0-B5F7-409C14E7F74B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Music Player</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0744BE11-EF66-4D03-B90C-18CFC5FF2EA0</key>
+		<string>https://github.com/iluminatii/Music-Player-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Music Player.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0744BE11-EF66-4D03-B90C-18CFC5FF2EA0</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/iluminatii/Music-Player-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0744BE11-EF66-4D03-B90C-18CFC5FF2EA0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0744BE11-EF66-4D03-B90C-18CFC5FF2EA0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Music Player</string>
+		</dict>
+	</array>
+</dict>
+</plist>

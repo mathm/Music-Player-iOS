@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMGenreList.h"
 
 @interface MMCustomizePlaylistViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
@@ -14,6 +15,6 @@
 
 @property (strong, nonatomic) NSMutableArray *songsList;
 
-@property (strong, nonatomic) NSMutableArray *genreList;
+@property (strong, nonatomic) MMGenreList *genreList;
 
 @end

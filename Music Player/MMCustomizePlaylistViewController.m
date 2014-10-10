@@ -9,6 +9,8 @@
 #import "MMCustomizePlaylistViewController.h"
 #import "MMMusicPlayerCustomizeGenreTableViewCell.h"
 #import "MMViewController.h"
+#import "MMGenre.h"
+#import "MMGenreList.h"
 
 @interface MMCustomizePlaylistViewController ()
 
@@ -42,28 +44,40 @@
     
     self.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery];
     
-    self.genreList = [[NSMutableArray alloc]init];
-    
-    //generate genre list
-    for(MPMediaItem *song in self.songsList)
-    {
-        NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre];
-        if(genre != nil)
-        {
-            if ([self.genreList containsObject:genre]==false) {
-                [self.genreList addObject:genre];
-            }
-        }
-    }
+    self.genreList = [[MMGenreList alloc]init];
    
     // generate sliderValueArray
-    self.tableSliderValuesArray = [[NSMutableArray alloc]init];
+    /*self.tableSliderValuesArray = [[NSMutableArray alloc]init];
     
     for(int i=0;i<self.genreList.count;i++)
     {
         NSNumber *value = [NSNumber numberWithInt:100/self.genreList.count];
         [self.tableSliderValuesArray addObject:value];
+    }*/
+    
+    //generate genre list
+    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
+    
+    for(MPMediaItem *song in self.songsList)
+    {
+        NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre];
+        if(genre != nil)
+        {
+            if ([tmpArr containsObject:genre]==false) {
+                [tmpArr addObject:genre];
+            }
+        }
     }
+    
+    for(NSString *genreName in tmpArr)
+    {
+        MMGenre *genre = [[MMGenre alloc]init];
+        genre.name = genreName;
+        [self.genreList.genreList addObject:genre];
+    }
+    
+    [self.genreList setInitialPercentage];
+    [self.genreList setInitialCellPosition];
     
     //update table
     [self.tableView reloadData];
@@ -92,12 +106,12 @@
     [cell.sliderPercent addTarget:self action:@selector(tableSliderChanged:) forControlEvents:UIControlEventValueChanged];
     //Keep a reference to each slider by assigning a tag so that we can determine which slider is being changed
     cell.sliderPercent.tag = indexPath.row;
-    //grab the value from the tableSliderValueArray
-    cell.sliderPercent.value = [[self.tableSliderValuesArray objectAtIndex:indexPath.row]intValue];
+    //grab the percentage value from genre
+    cell.sliderPercent.value = [[self.genreList.genreList objectAtIndex:indexPath.row] percentage];
     
     //genre label
     cell.labelGenre.font = [UIFont systemFontOfSize:12];
-    cell.labelGenre.text = [self.genreList objectAtIndex:indexPath.row];
+    cell.labelGenre.text = [[self.genreList.genreList objectAtIndex:indexPath.row] name];
     
     //percent label
     cell.labelPercent.font = [UIFont systemFontOfSize:12];
@@ -108,7 +122,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.genreList.count;
+    return self.genreList.genreList.count;
 }
 
 /*
@@ -116,39 +130,82 @@
  */
 -(void) tableSliderChanged:(UISlider *)sender
 {
-    NSNumber *sliderValue = [NSNumber numberWithInt:sender.value];
+    int sliderValue = [[NSNumber numberWithInt:sender.value] intValue];
     
     long cellPosition = sender.tag;
     
-    [self.tableSliderValuesArray replaceObjectAtIndex:cellPosition withObject:sliderValue];
+    //[self.tableSliderValuesArray replaceObjectAtIndex:cellPosition withObject:sliderValue];
+    [[self.genreList.genreList objectAtIndex:cellPosition] setPercentage:sliderValue];
     
     // add all slider values to avoid a overall value > 100
     int tmp = 0;
-    for(NSString *value in self.tableSliderValuesArray)
+    for(MMGenre *genre in self.genreList.genreList)
     {
-        int tmpSliderValue = [value intValue];
+        int tmpSliderValue = [genre percentage];
         tmp = tmp + tmpSliderValue;
     }
     NSLog(@"TEMP: %i",tmp);
     // if the overall value is > 100, take the smalest value and reduce his value by 1
-    if(tmp>=100)
+    while(tmp>100)
     {
-        long cellPositionMinValue = 0;
-        for(int i=0; i<self.tableSliderValuesArray.count;i++)
+        [self.genreList generateNewListRanking];
+        
+        for (MMGenre *genre in self.genreList.genreList) {
+            NSLog(@"cellPosition:%li, percentage %i, rank %i",genre.cellPosition, genre.percentage, genre.rank);
+        }
+        
+        /*long cellPositionMinValue = 0;
+        for(int i=0; i<self.genreList.genreList.count;i++)
         {
-            int tmpSliderValue = [[self.tableSliderValuesArray objectAtIndex:i] intValue];
-            int minValue = [[self.tableSliderValuesArray objectAtIndex:cellPositionMinValue] intValue];
+            int tmpSliderValue = [[self.genreList.genreList objectAtIndex:i] percentage];
+            int minValueTmp = [[self.genreList.genreList objectAtIndex:cellPositionMinValue] percentage];
 
-            if(tmpSliderValue < minValue && minValue>=0)
+            if(tmpSliderValue < minValueTmp && tmpSliderValue>0)
                 cellPositionMinValue = i;
             
             
-            
-            NSLog(@"min %@",[self.tableSliderValuesArray valueForKey:@"@min.self"]);
+        }*/
+        long cellPositionMinValue = 0;
+        /*for (int i=0; i<self.genreList.genreList.count; i++) {
+            if ([[self.genreList.genreList objectAtIndex:i] percentage]>0 && [[self.genreList.genreList objectAtIndex:i] cellPosition] != cellPosition) {
+                cellPositionMinValue = i;
+            }
+        }*/
+        BOOL breakOuterFor = false;
+        for(int i=0;i<self.genreList.genreList.count;i++)
+        {
+            for(int j=0;j<self.genreList.genreList.count;j++)
+            {
+                if ([[self.genreList.genreList objectAtIndex:j] rank] == i) {
+                    if([[self.genreList.genreList objectAtIndex:j] percentage] > 0 && [[self.genreList.genreList objectAtIndex:j] cellPosition] != cellPosition)
+                    {
+                        cellPositionMinValue = j;
+                        breakOuterFor = true;
+                        break;
+                    }
+                }
+            }
+            if(breakOuterFor) break;
         }
-        NSNumber *newValue = [NSNumber numberWithInt:[[self.tableSliderValuesArray objectAtIndex:cellPositionMinValue] intValue]-1];
-        [self.tableSliderValuesArray replaceObjectAtIndex:cellPositionMinValue withObject:newValue];
-        NSLog(@"NEW VALUE: %@",newValue);
+        
+        //NSNumber *minValueTmp = [NSNumber numberWithInt:[[self.tableSliderValuesArray objectAtIndex:cellPositionMinValue] intValue]];
+        int minValue = [[self.genreList.genreList objectAtIndex:cellPositionMinValue] percentage];
+        int newValue = 0;
+        
+        if (minValue-(tmp-100)>0) {
+            newValue = minValue-(tmp-100);
+            tmp = tmp - (tmp-100);
+        } else
+        {
+            newValue = 0;
+            tmp = tmp - minValue;
+            
+            if(minValue == 0 && newValue == 0)
+                break;
+        }
+        //NSNumber *newValueTmp = [NSNumber numberWithInt:newValue];
+        //[self.tableSliderValuesArray replaceObjectAtIndex:cellPositionMinValue withObject:newValueTmp];
+        [[self.genreList.genreList objectAtIndex:cellPositionMinValue] setPercentage:newValue];
     }
     
     [self.tableView reloadData];
