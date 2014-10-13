@@ -11,6 +11,7 @@
 @interface MMGenre : NSObject
 
 @property (strong, nonatomic) NSString *name;
+@property int filesInDatabase;
 @property int percentage;
 @property long cellPosition;
 @property int rank;

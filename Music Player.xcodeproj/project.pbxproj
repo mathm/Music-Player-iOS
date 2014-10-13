@@ -32,6 +32,8 @@
 		C793215A19E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C793215919E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib */; };
 		C793215D19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */; };
 		C793216019E2D065006E4C8E /* MMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C793215F19E2D065006E4C8E /* MMTabBarController.m */; };
+		C79EFB0919EC181C00302103 /* MusicPlayerSongTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C79EFB0819EC181C00302103 /* MusicPlayerSongTableCell.xib */; };
+		C79EFB0C19EC196700302103 /* MMMusicPlayerSongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C79EFB0B19EC196700302103 /* MMMusicPlayerSongTableViewCell.m */; };
 		C7E90B1519E7EAA1001EB9CC /* MMGenre.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E90B1419E7EAA1001EB9CC /* MMGenre.m */; };
 		C7E90B1819E7EB6C001EB9CC /* MMGenreList.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E90B1719E7EB6C001EB9CC /* MMGenreList.m */; };
 		C7F3E5D519D4348E00220E81 /* MMAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F3E5D419D4348E00220E81 /* MMAudioManager.m */; };
@@ -86,6 +88,9 @@
 		C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMusicPlayerCustomizeGenreTableViewCell.m; sourceTree = "<group>"; };
 		C793215E19E2D065006E4C8E /* MMTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTabBarController.h; sourceTree = "<group>"; };
 		C793215F19E2D065006E4C8E /* MMTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTabBarController.m; sourceTree = "<group>"; };
+		C79EFB0819EC181C00302103 /* MusicPlayerSongTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerSongTableCell.xib; sourceTree = "<group>"; };
+		C79EFB0A19EC196700302103 /* MMMusicPlayerSongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMusicPlayerSongTableViewCell.h; sourceTree = "<group>"; };
+		C79EFB0B19EC196700302103 /* MMMusicPlayerSongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMusicPlayerSongTableViewCell.m; sourceTree = "<group>"; };
 		C7E90B1319E7EAA1001EB9CC /* MMGenre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGenre.h; sourceTree = "<group>"; };
 		C7E90B1419E7EAA1001EB9CC /* MMGenre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMGenre.m; sourceTree = "<group>"; };
 		C7E90B1619E7EB6C001EB9CC /* MMGenreList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGenreList.h; sourceTree = "<group>"; };
@@ -177,6 +182,9 @@
 				C7E90B1719E7EB6C001EB9CC /* MMGenreList.m */,
 				C7F3E5D319D4348E00220E81 /* MMAudioManager.h */,
 				C7F3E5D419D4348E00220E81 /* MMAudioManager.m */,
+				C79EFB0819EC181C00302103 /* MusicPlayerSongTableCell.xib */,
+				C79EFB0A19EC196700302103 /* MMMusicPlayerSongTableViewCell.h */,
+				C79EFB0B19EC196700302103 /* MMMusicPlayerSongTableViewCell.m */,
 				C793215919E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib */,
 				C793215B19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.h */,
 				C793215C19E2C76D006E4C8E /* MMMusicPlayerCustomizeGenreTableViewCell.m */,
@@ -311,6 +319,7 @@
 			files = (
 				C793215A19E2C52F006E4C8E /* MusicPlayerCustomizeGenreTableCell.xib in Resources */,
 				C73DB59519C9DBAB00BE1459 /* pause_button.png in Resources */,
+				C79EFB0919EC181C00302103 /* MusicPlayerSongTableCell.xib in Resources */,
 				C7F3E5D719D9898400220E81 /* blackbox.jpg in Resources */,
 				C73DB59719C9DBAB00BE1459 /* play_button.png in Resources */,
 				C7F3E5E319DAD79A00220E81 /* music_tab_bar_icon.png in Resources */,
@@ -340,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C79EFB0C19EC196700302103 /* MMMusicPlayerSongTableViewCell.m in Sources */,
 				C73DB56D19C9DB0500BE1459 /* MMAppDelegate.m in Sources */,
 				C73DB57319C9DB0500BE1459 /* MMViewController.m in Sources */,
 				C7F3E5D519D4348E00220E81 /* MMAudioManager.m in Sources */,

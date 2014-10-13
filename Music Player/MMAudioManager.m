@@ -80,16 +80,21 @@
     [self switchAudioFile:-1 :(int)[self.songsList indexOfObject:self.currentSong]];
 }
 
+- (void) play:(int)index
+{
+    [self pause];
+    self.currentSong = [self.songsList objectAtIndex:index];
+    AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
+    
+    [self.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
+    [self play];
+}
+
 - (void) switchAudioFile:(int)direction :(int)indexPrevious
 {
-    if(indexPrevious+direction>=0 && indexPrevious+direction<=self.songsList.count)
+    if(indexPrevious+direction>=0 && indexPrevious+direction<self.songsList.count)
     {
-        [self pause];
-        self.currentSong = [self.songsList objectAtIndex:indexPrevious+direction];
-        AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
-    
-        [self.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
-        [self play];
+        [self play:(indexPrevious+direction)];
     }
 }
 

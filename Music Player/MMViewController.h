@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MMAudioManager.h"
 
 @interface MMViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) MMAudioManager *audioManager;
+@property NSString *nilGenreName;
+
 @property (strong, nonatomic) IBOutlet UIButton *togglePlayPause;
 @property (strong, nonatomic) IBOutlet UILabel *songName;
 @property (strong, nonatomic) IBOutlet UILabel *durationOutlet;

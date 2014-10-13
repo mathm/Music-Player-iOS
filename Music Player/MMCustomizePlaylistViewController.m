@@ -14,6 +14,8 @@
 
 @interface MMCustomizePlaylistViewController ()
 
+@property (strong, nonatomic) MMViewController *viewController;
+
 @end
 
 @implementation MMCustomizePlaylistViewController
@@ -30,15 +32,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    MMViewController *viewController = [self.tabBarController.viewControllers objectAtIndex:0];
-    NSLog(@"%@",viewController.songName);
+    
+    //loading viewController Data
+    self.viewController = [self.tabBarController.viewControllers objectAtIndex:0];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-    NSArray *itemsFromGenericQuery = [everything items];
+    //music library query
+    MPMediaQuery *musicLibraryWithoutCloud = [[MPMediaQuery alloc] init];
+    // add filter to avoid cloud music and videos
+    [musicLibraryWithoutCloud addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithBool:NO] forProperty:MPMediaItemPropertyIsCloudItem]];
+
+    NSArray *itemsFromGenericQuery = [musicLibraryWithoutCloud items];
     
     self.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery];
     
@@ -47,12 +53,20 @@
     
     //generate genre list
     NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
-    
+    BOOL isNilGenre = false;
     for(MPMediaItem *song in self.songsList)
     {
         NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre];
         if(genre != nil)
         {
+            if ([tmpArr containsObject:genre]==false) {
+                [tmpArr addObject:genre];
+            }
+        }
+        else if (isNilGenre == false) //if there is a song without genre add genre "Other" to list
+        {
+            isNilGenre = true;
+            genre = self.viewController.nilGenreName;
             if ([tmpArr containsObject:genre]==false) {
                 [tmpArr addObject:genre];
             }
@@ -63,8 +77,27 @@
     {
         MMGenre *genre = [[MMGenre alloc]init];
         genre.name = genreName;
+        
         [self.genreList.genreList addObject:genre];
     }
+    
+    //count genre files for each genre in library
+    for(MPMediaItem *song in self.songsList)
+    {
+        NSString *genreName = [song valueForProperty: MPMediaItemPropertyGenre];
+        
+        if(genreName == nil)
+            genreName = self.viewController.nilGenreName;
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",genreName];
+        NSArray *tmpArr = [self.genreList.genreList filteredArrayUsingPredicate:predicate];
+        if(tmpArr.count>0)
+        {
+            MMGenre *genre = [tmpArr objectAtIndex:0];
+            genre.filesInDatabase++;
+        }
+    }
+    //NSLog(@"%lu",(unsigned long)self.songsList.count);
     
     [self.genreList setInitialPercentage];
     [self.genreList setInitialCellPosition];
@@ -100,12 +133,13 @@
     cell.sliderPercent.value = [[self.genreList.genreList objectAtIndex:indexPath.row] percentage];
     
     //genre label
-    cell.labelGenre.font = [UIFont systemFontOfSize:12];
     cell.labelGenre.text = [[self.genreList.genreList objectAtIndex:indexPath.row] name];
     
     //percent label
-    cell.labelPercent.font = [UIFont systemFontOfSize:12];
     cell.labelPercent.text = [[NSNumber numberWithFloat:cell.sliderPercent.value] stringValue];
+    
+    //files in db label
+    cell.labelFiles.text = [NSString stringWithFormat:@"%i",[[self.genreList.genreList objectAtIndex:indexPath.row]filesInDatabase]];
     
     return cell;
 }
@@ -183,6 +217,35 @@
     
     //update table data
     [self.tableView reloadData];
+}
+
+/*
+ Button pressed, generates new playlist and switch back to playlist tab
+ */
+- (IBAction)buttonGenerateNewPlaylist:(id)sender {
+    
+    
+    //generate genre list
+    NSMutableArray *tmpArr = [[NSMutableArray alloc]initWithArray:self.songsList];
+    NSMutableArray *tmpSongsList = [[NSMutableArray alloc]init];
+    
+    MPMediaItem *song;
+    while(tmpSongsList.count<10)
+    {
+        song = [tmpArr objectAtIndex:arc4random_uniform((int)tmpArr.count)];
+        [tmpSongsList addObject:song];
+        [tmpArr removeObject:song];
+        
+        if(tmpArr.count == 0)
+            break;
+    }
+    
+    NSLog(@"%lu",(unsigned long)tmpSongsList.count);
+    self.viewController.audioManager.songsList = tmpSongsList;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
+    
+    self.tabBarController.selectedIndex = 0;
 }
 
 /*

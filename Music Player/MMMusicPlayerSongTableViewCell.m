@@ -1,20 +1,19 @@
 //
-//  MMMusicPlayerCustomizeGenreTableViewCell.m
+//  MMMusicPlayerSongTableViewCell.m
 //  Music Player
 //
-//  Created by Mathias on 06.10.14.
+//  Created by Mathias on 10/13/14.
 //  Copyright (c) 2014 Mathias. All rights reserved.
 //
 
-#import "MMMusicPlayerCustomizeGenreTableViewCell.h"
+#import "MMMusicPlayerSongTableViewCell.h"
 
-@implementation MMMusicPlayerCustomizeGenreTableViewCell
+@implementation MMMusicPlayerSongTableViewCell
 
 //synthesize is automactically generate code for accessing the properties
+@synthesize labelSongTitle = _labelSongTitle;
+@synthesize labelArtist = _labelArtist;
 @synthesize labelGenre = _labelGenre;
-@synthesize labelPercent = _labelPercent;
-@synthesize sliderPercent = _sliderPercent;
-@synthesize labelFiles = _labelFiles;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

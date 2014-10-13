@@ -8,18 +8,21 @@
 
 #import "MMViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "MMAudioManager.h"
+#import "MMMusicPlayerSongTableViewCell.h"
+#import "MMCustomizePlaylistViewController.h"
 
 @interface MMViewController ()
 @property (strong, nonatomic) NSMutableArray *songsList;
-@property (strong, nonatomic) AVPlayer *audioPlayer;
 @property (strong, nonatomic) id timeObserver;
 @property CGPoint panXY;
 @property BOOL panOverride;
 @property BOOL playNextSong;
+@property BOOL sliderDurationTouched;
 @property (strong, nonatomic) MPMediaItem *currentSong;
+@property UIBackgroundTaskIdentifier bgTaskId;
 
-@property (strong, nonatomic) MMAudioManager *audioManager;
+@property (strong, nonatomic) MMCustomizePlaylistViewController *customizePlaylistViewController;
+
 @end
 
 @implementation MMViewController
@@ -28,10 +31,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view
-    //1
+    
+    //setup Audio Session correctly so the audio can be played in the background
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    
+    //necessary because the app should play a sequence of songs, otherwise killed after first one finished
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    //loading CustomizePlaylistViewController Data
+    self.customizePlaylistViewController = [self.tabBarController.viewControllers objectAtIndex:1];
+    
     self.tableView.dataSource =self;
     self.tableView.delegate = self;
-    //2
     
     self.audioManager = [[MMAudioManager alloc]init];
     
@@ -39,18 +51,19 @@
     NSArray *itemsFromGenericQuery = [everything items];
     
     self.audioManager.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery];
-    //3
+
+    //set a genre name if the resulting genre name is nil
+    self.nilGenreName = @"Other";
+    
     [self.tableView reloadData];
     //enable delete button on swipe
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
-    //4
     self.audioManager.currentSong = [self.audioManager.songsList objectAtIndex:0];
     AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.audioManager.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
     
     [self.audioManager.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
     [self.audioManager play];
-    //5
     
     [self updateView];
 
@@ -84,26 +97,15 @@
                                                  name:@"MMAudioManagerPlayerItemDidReachEndNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(newPlaylistGenerated)
+                                                 name:@"MMCustomizePlaylistNewPlaylistGeneratedNotification"
+                                               object:nil];
+    
     self.panOverride = true;
     self.playNextSong = true;
+    self.sliderDurationTouched = false;
 
-}
-
--(void) switchAudiofile:(int)direction :(int)indexPrevious
-{
-    if(indexPrevious+direction>=0 && indexPrevious+direction<=self.songsList.count)
-    {
-        [self.audioPlayer pause];
-        self.currentSong = [self.songsList objectAtIndex:indexPrevious+direction];
-        AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
-    
-        [self.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
-        [self.audioPlayer play];
-        [self.togglePlayPause setSelected:YES];
-        NSString *songTitle = [self.currentSong valueForProperty: MPMediaItemPropertyTitle];
-        self.songName.text = songTitle;
-        [self.sliderOutlet setMaximumValue:self.audioPlayer.currentItem.asset.duration.value/self.audioPlayer.currentItem.asset.duration.timescale];
-    }
 }
 
 /*--------------------------------------------------------------
@@ -126,58 +128,62 @@
  *-------------------------------------------------------------*/
 - (void)oneFingerPan:(UIPanGestureRecognizer *)recognizer 
 {
-    CGPoint point = [recognizer locationInView:[self view]];
-    if(self.panOverride == true)
+    if(self.sliderDurationTouched == false)
     {
-        self.panXY = point;
-        self.panOverride = false;
-    } else
-    {
-        //pan right
-        if(point.x > self.panXY.x +10)
+
+        CGPoint point = [recognizer locationInView:[self view]];
+        if(self.panOverride == true)
         {
-            NSLog(@"right %f,%f", self.panXY.x, self.panXY.y);
-            if(self.playNextSong)
+            self.panXY = point;
+            self.panOverride = false;
+        } else
+        {
+            //pan right
+            if(point.x > self.panXY.x +10)
             {
-                [self.audioManager playPrevious];
-                self.playNextSong = false;
-                [self updateView];
+                NSLog(@"right %f,%f", self.panXY.x, self.panXY.y);
+                if(self.playNextSong)
+                {
+                    [self.audioManager playPrevious];
+                    self.playNextSong = false;
+                    [self updateView];
+                }
             }
-        }
-        //pan left
-         else if (point.x < self.panXY.x - 10)
-        {
-            NSLog(@"left %f,%f", self.panXY.x, self.panXY.y);
-            if(self.playNextSong)
+            //pan left
+             else if (point.x < self.panXY.x - 10)
             {
-                //[self switchAudiofile:-1 :(int)[self.songsList indexOfObject:self.currentSong]];
-                [self.audioManager playNext];
-                self.playNextSong = false;
-                [self updateView];
+                NSLog(@"left %f,%f", self.panXY.x, self.panXY.y);
+                if(self.playNextSong)
+                {
+                    //[self switchAudiofile:-1 :(int)[self.songsList indexOfObject:self.currentSong]];
+                    [self.audioManager playNext];
+                    self.playNextSong = false;
+                    [self updateView];
+                }
             }
-        }
-        //pan down
-        else if(point.y > self.panXY.y + 10)
-        {
-            NSLog(@"up %f,%f volume %f", self.panXY.x, self.panXY.y,self.audioManager.audioPlayer.volume);
-            self.panOverride = true;
-            if(self.audioManager.audioPlayer.volume>0)
-                self.audioManager.audioPlayer.volume = self.audioManager.audioPlayer.volume - 0.1;
-        }
-        //pan up
-        else if(point.y < self.panXY.y - 10)
-        {
-            NSLog(@"up %f,%f volume %f", self.panXY.x, self.panXY.y,self.audioManager.audioPlayer.volume);
-            self.panOverride = true;
-            if(self.audioManager.audioPlayer.volume<1)
-                self.audioManager.audioPlayer.volume = self.audioManager.audioPlayer.volume + 0.1;
+            //pan down
+            else if(point.y > self.panXY.y + 10)
+            {
+                NSLog(@"up %f,%f volume %f", self.panXY.x, self.panXY.y,self.audioManager.audioPlayer.volume);
+                self.panOverride = true;
+                if(self.audioManager.audioPlayer.volume>0)
+                    self.audioManager.audioPlayer.volume = self.audioManager.audioPlayer.volume - 0.1;
+            }
+            //pan up
+            else if(point.y < self.panXY.y - 10)
+            {
+                NSLog(@"up %f,%f volume %f", self.panXY.x, self.panXY.y,self.audioManager.audioPlayer.volume);
+                self.panOverride = true;
+                if(self.audioManager.audioPlayer.volume<1)
+                    self.audioManager.audioPlayer.volume = self.audioManager.audioPlayer.volume + 0.1;
+            }
         }
     }
     
     //pan ended
     if(recognizer.state == UIGestureRecognizerStateEnded)
     {
-        NSLog(@"pan end");
+        //NSLog(@"pan end");
         self.panOverride = true;
         self.playNextSong = true;
     }
@@ -204,19 +210,26 @@
 }
 
 - (IBAction)sliderTouchDown:(id)sender {
-    //NSLog(@"TouchDown -remove timeObserver");
-    //[self.audioManager.audioPlayer removeTimeObserver:(self.timeObserver)];
+    /*NSLog(@"TouchDown");
+    if(self.sliderDurationTouched == false)
+    {
+        NSLog(@"remove timeObserver");
+        self.sliderDurationTouched = true;
+        //[self.audioManager.audioPlayer removeTimeObserver:(self.timeObserver)];
+    }*/
 }
 
 - (IBAction)sliderTouchUpInside:(id)sender {
+    //self.sliderDurationTouched = false;
     //NSLog(@"TouchUpInside - add timeObserver");
-     //self.timeObserver = [self configurePlayer];
+    //self.timeObserver = [self configurePlayer];
     
 }
 
 - (IBAction)sliderTouchUpOutside:(id)sender {
+    //self.sliderDurationTouched = false;
     //NSLog(@"TouchUpOutside - add timeObserver");
-     //self.timeObserver = [self configurePlayer];
+    //self.timeObserver = [self configurePlayer];
 }
 
 
@@ -226,18 +239,27 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"MusicCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.textLabel.font = [UIFont systemFontOfSize:12];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+    static NSString *cellIdentifier = @"MusicPlayerSongTableCell";
+    
+    MMMusicPlayerSongTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if(cell==nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MusicPlayerSongTableCell" owner: self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
     
     MPMediaItem *song = [self.audioManager.songsList objectAtIndex:indexPath.row];
     NSString *songTitle = [song valueForProperty: MPMediaItemPropertyTitle];
     NSString *songArtist = [song valueForProperty:MPMediaItemPropertyArtist];
-    NSString *durationLabel = [song valueForProperty: MPMediaItemPropertyGenre];
-    //cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",songTitle,songArtist];
-    cell.textLabel.text = songTitle;
-    cell.detailTextLabel.text = durationLabel;
+    NSString *songGenre = [song valueForProperty: MPMediaItemPropertyGenre];
+
+    cell.labelSongTitle.text = songTitle;
+    cell.labelArtist.text = songArtist;
+    if (songGenre == nil) {
+        songGenre = self.nilGenreName;
+    }
+    cell.labelGenre.text = songGenre;
     
     return cell;
 }
@@ -319,7 +341,21 @@
 }
 
 /*
- if audiomManager plays a song to end
+ set Background Task Identifier for playing songs in background
+ */
+- (void) setBackgroundTaskIdentifier
+{
+    UIBackgroundTaskIdentifier newTaskId = UIBackgroundTaskInvalid;
+    newTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:NULL];
+    
+    if(newTaskId != UIBackgroundTaskInvalid && self.bgTaskId != UIBackgroundTaskInvalid)
+        [[UIApplication sharedApplication] endBackgroundTask:self.bgTaskId];
+    
+    self.bgTaskId = newTaskId;
+}
+
+/*
+ if audioManager plays a song to end
  */
 - (void) playerItemDidReachEnd
 {
@@ -327,5 +363,14 @@
     [self updateView];
 }
 
+- (void) newPlaylistGenerated
+{
+    NSLog(@"new playlist set");
+    //play first song on this list
+    [self.audioManager play:0];
+    
+    [self.tableView reloadData];
+    [self updateView];
+}
 
 @end

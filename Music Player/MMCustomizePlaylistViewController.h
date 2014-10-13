@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSMutableArray *songsList;
 
 @property (strong, nonatomic) MMGenreList *genreList;
+- (IBAction)buttonGenerateNewPlaylist:(id)sender;
 
 - (IBAction)buttonSetInitialPercentage:(id)sender;
 

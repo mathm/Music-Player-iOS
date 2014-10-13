@@ -6,13 +6,21 @@
          contextName = "-[MMViewController viewDidLoad]:MMViewController.m">
          <PersistentStrings>
             <PersistentString
+               value = "currentItem">
+            </PersistentString>
+            <PersistentString
                value = "self.audioPlayer.currentItem.duration">
             </PersistentString>
             <PersistentString
                value = "self.sliderOutlet.maximumValue">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MMAudioManager setCurrentSong:]:MMAudioManager.m">
+         <PersistentStrings>
             <PersistentString
-               value = "currentItem">
+               value = "_currentSongTitle = [_currentSong valueForProperty: MPMediaItemPropertyTitle];">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -20,10 +28,10 @@
          contextName = "-[MMViewController updateView]:MMViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[MMAudioManager setCurrentSong:]:MMAudioManager.m">
+         contextName = "-[MMAudioManager switchAudioFile::]:MMAudioManager.m">
          <PersistentStrings>
             <PersistentString
-               value = "_currentSongTitle = [_currentSong valueForProperty: MPMediaItemPropertyTitle];">
+               value = "self.songsList.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
