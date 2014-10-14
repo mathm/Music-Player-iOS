@@ -15,11 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textfieldFiles;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray *songsList;
-
-@property (strong, nonatomic) MMGenreList *genreList;
 - (IBAction)buttonGenerateNewPlaylist:(id)sender;
-
 - (IBAction)buttonSetInitialPercentage:(id)sender;
+
+- (NSMutableArray *) generateNewPlaylist:(MMGenreList *)genreList :(int)size;
 
 @end

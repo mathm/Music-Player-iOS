@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434916846.487605"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990540.322043"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
             landmarkName = "-newPlaylistGenerated"
             landmarkType = "5">
             <Locations>
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990540.322043"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
             landmarkName = "-newPlaylistGenerated"
             landmarkType = "5">
          </BreakpointContent>
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -104,11 +104,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
             landmarkName = "-sliderTouchUpOutside:"
             landmarkType = "5">
          </BreakpointContent>
@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "-oneFingerPan:"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "@implementation MMViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMAudioManager.h"
-            timestampString = "434897509.743025"
+            timestampString = "435000310.771224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "-playPrevious"
             landmarkType = "4">
          </BreakpointContent>
@@ -276,11 +276,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434917051.383301"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -292,27 +292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434911140.445641"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "-tableSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -324,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "-tableSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -340,11 +324,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "-tableSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -356,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "-tableSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -372,11 +356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "-tableSliderChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -388,44 +372,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995020.36058"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "-tableSliderChanged:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434911140.445641"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434911140.445641"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -452,11 +404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990540.322043"
+            timestampString = "435001835.121396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
             landmarkName = "-newPlaylistGenerated"
             landmarkType = "5">
          </BreakpointContent>
@@ -468,11 +420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990540.322043"
+            timestampString = "435001835.121396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "-newPlaylistGenerated"
             landmarkType = "5">
          </BreakpointContent>
@@ -484,11 +436,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990091.790697"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "-updateView"
             landmarkType = "5">
          </BreakpointContent>
@@ -500,11 +452,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMViewController.m"
-            timestampString = "434990540.322043"
+            timestampString = "435001722.718291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
             landmarkName = "-updateView"
             landmarkType = "5">
          </BreakpointContent>
@@ -516,11 +468,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434993295.493065"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "5">
          </BreakpointContent>
@@ -532,11 +484,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434994754.347215"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "-oneFingerTab:"
             landmarkType = "5">
          </BreakpointContent>
@@ -548,11 +500,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434994754.347215"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "-oneFingerTab:"
             landmarkType = "5">
          </BreakpointContent>
@@ -564,13 +516,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Music Player/MMCustomizePlaylistViewController.m"
-            timestampString = "434995048.291477"
+            timestampString = "434998498.127447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "-oneFingerTab:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Music Player/MMCustomizePlaylistViewController.m"
+            timestampString = "435001835.121396"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "-generateNewPlaylist::"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Music Player/MMCustomizePlaylistViewController.h"
+            timestampString = "434999252.869089"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "-generateNewPlaylist::"
+            landmarkType = "4">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

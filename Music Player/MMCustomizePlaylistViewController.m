@@ -39,69 +39,6 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    //music library query
-    MPMediaQuery *musicLibraryWithoutCloud = [[MPMediaQuery alloc] init];
-    // add filter to avoid cloud music and videos
-    [musicLibraryWithoutCloud addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithBool:NO] forProperty:MPMediaItemPropertyIsCloudItem]];
-
-    NSArray *itemsFromGenericQuery = [musicLibraryWithoutCloud items];
-    
-    self.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery];
-    
-    self.genreList = [[MMGenreList alloc]init];
-   
-    
-    //generate genre list
-    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
-    BOOL isNilGenre = false;
-    for(MPMediaItem *song in self.songsList)
-    {
-        NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre];
-        if(genre != nil)
-        {
-            if ([tmpArr containsObject:genre]==false) {
-                [tmpArr addObject:genre];
-            }
-        }
-        else if (isNilGenre == false) //if there is a song without genre add genre "Other" to list
-        {
-            isNilGenre = true;
-            genre = self.viewController.nilGenreName;
-            if ([tmpArr containsObject:genre]==false) {
-                [tmpArr addObject:genre];
-            }
-        }
-    }
-    
-    for(NSString *genreName in tmpArr)
-    {
-        MMGenre *genre = [[MMGenre alloc]init];
-        genre.name = genreName;
-        
-        [self.genreList.genreList addObject:genre];
-    }
-    
-    //count genre files for each genre in library
-    for(MPMediaItem *song in self.songsList)
-    {
-        NSString *genreName = [song valueForProperty: MPMediaItemPropertyGenre];
-        
-        if(genreName == nil)
-            genreName = self.viewController.nilGenreName;
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",genreName];
-        NSArray *tmpArr = [self.genreList.genreList filteredArrayUsingPredicate:predicate];
-        if(tmpArr.count>0)
-        {
-            MMGenre *genre = [tmpArr objectAtIndex:0];
-            [genre.songsList addObject: song];
-        }
-    }
-    //NSLog(@"%lu",(unsigned long)self.songsList.count);
-    
-    [self.genreList setInitialPercentage];
-    [self.genreList setInitialCellPosition];
-    
     //update table
     [self.tableView reloadData];
     
@@ -148,8 +85,8 @@
         if([string length] == 0)
             string = @"0";
         //if textfield value is higher then songslist.count, set value to songslist.count
-        if([self.textfieldFiles.text intValue]>self.songsList.count)
-            string = [NSString stringWithFormat:@"%lu",(unsigned long)self.songsList.count];
+        if([self.textfieldFiles.text intValue]>self.viewController.audioManager.songsList.count)
+            string = [NSString stringWithFormat:@"%lu",(unsigned long)self.viewController.audioManager.songsList.count];
         
         //set new value
         self.textfieldFiles.text = string;
@@ -179,23 +116,23 @@
     //Keep a reference to each slider by assigning a tag so that we can determine which slider is being changed
     cell.sliderPercent.tag = indexPath.row;
     //grab the percentage value from genre
-    cell.sliderPercent.value = [[self.genreList.genreList objectAtIndex:indexPath.row] percentage];
+    cell.sliderPercent.value = [[self.viewController.genreList.genreList objectAtIndex:indexPath.row] percentage];
     
     //genre label
-    cell.labelGenre.text = [[self.genreList.genreList objectAtIndex:indexPath.row] name];
+    cell.labelGenre.text = [[self.viewController.genreList.genreList objectAtIndex:indexPath.row] name];
     
     //percent label
     cell.labelPercent.text = [NSString stringWithFormat:@"%@%%",[[NSNumber numberWithFloat:cell.sliderPercent.value] stringValue]];
     
     //files in db label
-    cell.labelFiles.text = [NSString stringWithFormat:@"%lu",(unsigned long)[[[self.genreList.genreList objectAtIndex:indexPath.row]songsList]count]];
+    cell.labelFiles.text = [NSString stringWithFormat:@"%lu",(unsigned long)[[[self.viewController.genreList.genreList objectAtIndex:indexPath.row]songsList]count]];
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.genreList.genreList.count;
+    return self.viewController.genreList.genreList.count;
 }
 
 /*
@@ -208,7 +145,7 @@
     long cellPosition = sender.tag;
     
     //[self.tableSliderValuesArray replaceObjectAtIndex:cellPosition withObject:sliderValue];
-    [[self.genreList.genreList objectAtIndex:cellPosition] setPercentage:sliderValue];
+    [[self.viewController.genreList.genreList objectAtIndex:cellPosition] setPercentage:sliderValue];
     
     /*
     // add all slider values to avoid a overall value > 100
@@ -274,16 +211,27 @@
  */
 - (IBAction)buttonGenerateNewPlaylist:(id)sender {
     
+    //generate and set new playlist
+    self.viewController.audioManager.playList = [self generateNewPlaylist:self.viewController.genreList :[self.textfieldFiles.text intValue]];
     
+    //set notofication that new playlist is generated
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
+    
+    //switch view to "main" viewController
+    self.tabBarController.selectedIndex = 0;
+}
+
+- (NSMutableArray *) generateNewPlaylist:(MMGenreList *)genreList :(int)size
+{
+
     //generate genre list
-    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];//[[NSMutableArray alloc]initWithArray:self.songsList];
+    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
     NSMutableArray *tmpSongsList = [[NSMutableArray alloc]init];
     
     //fill tmpArr with songs by defined percentage data
-    
     //calculate basis song array on the basis of genre and percentage
-    for (int i=0; i<self.genreList.genreList.count; i++) {
-        MMGenre *genre = [self.genreList.genreList objectAtIndex:i];
+    for (int i=0; i<genreList.genreList.count; i++) {
+        MMGenre *genre = [genreList.genreList objectAtIndex:i];
         if(genre.percentage>0)
         {
             int rounded = ceil(((int)[genre.songsList count] * genre.percentage)/100);
@@ -300,10 +248,9 @@
             }
         }
     }
-    NSLog(@"Dateien: %lu",(unsigned long)tmpArr.count);
-    
+
     MPMediaItem *song;
-    while(tmpSongsList.count<[self.textfieldFiles.text intValue])
+    while(tmpSongsList.count<size)
     {
         if(tmpArr.count == 0)
             break;
@@ -313,16 +260,8 @@
         [tmpArr removeObject:song];
     }
     
-    NSLog(@"%lu",(unsigned long)tmpSongsList.count);
-    
-    //set new playlist
-    self.viewController.audioManager.songsList = tmpSongsList;
-    
-    //set notofication that new playlist is generated
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
-    
-    //switch view to "main" viewController
-    self.tabBarController.selectedIndex = 0;
+    //return new playlist
+    return tmpSongsList;
 }
 
 /*
@@ -330,7 +269,7 @@
  */
 -(IBAction) buttonSetInitialPercentage:(id)sender
 {
-    [self.genreList setInitialPercentage];
+    [self.viewController.genreList setInitialPercentage];
     [self.tableView reloadData];
 }
 

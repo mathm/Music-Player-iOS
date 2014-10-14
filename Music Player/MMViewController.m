@@ -12,7 +12,6 @@
 #import "MMCustomizePlaylistViewController.h"
 
 @interface MMViewController ()
-@property (strong, nonatomic) NSMutableArray *songsList;
 @property (strong, nonatomic) id timeObserver;
 @property CGPoint panXY;
 @property BOOL panOverride;
@@ -47,19 +46,80 @@
     
     self.audioManager = [[MMAudioManager alloc]init];
     
-    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-    NSArray *itemsFromGenericQuery = [everything items];
-    
-    self.audioManager.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery];
-
     //set a genre name if the resulting genre name is nil
     self.nilGenreName = @"Other";
+    
+    //music library query
+    MPMediaQuery *musicLibraryWithoutCloud = [[MPMediaQuery alloc] init];
+    // add filter to avoid cloud music and videos
+    [musicLibraryWithoutCloud addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithBool:NO] forProperty:MPMediaItemPropertyIsCloudItem]];
+    
+    NSArray *itemsFromGenericQuery = [musicLibraryWithoutCloud items];
+    
+    self.audioManager.songsList = [NSMutableArray arrayWithArray:itemsFromGenericQuery]; //set initial song list
+    
+    self.genreList = [[MMGenreList alloc]init];
+    
+    
+    //generate genre list
+    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];
+    BOOL isNilGenre = false;
+    for(MPMediaItem *song in self.audioManager.songsList)
+    {
+        NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre];
+        if(genre != nil)
+        {
+            if ([tmpArr containsObject:genre]==false) {
+                [tmpArr addObject:genre];
+            }
+        }
+        else if (isNilGenre == false) //if there is a song without genre add genre "Other" to list
+        {
+            isNilGenre = true;
+            genre = self.nilGenreName;
+            if ([tmpArr containsObject:genre]==false) {
+                [tmpArr addObject:genre];
+            }
+        }
+    }
+    
+    for(NSString *genreName in tmpArr)
+    {
+        MMGenre *genre = [[MMGenre alloc]init];
+        genre.name = genreName;
+        
+        [self.genreList.genreList addObject:genre];
+    }
+    
+    //count genre files for each genre in library
+    for(MPMediaItem *song in self.audioManager.songsList)
+    {
+        NSString *genreName = [song valueForProperty: MPMediaItemPropertyGenre];
+        
+        if(genreName == nil)
+            genreName = self.nilGenreName;
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",genreName];
+        NSArray *tmpArr = [self.genreList.genreList filteredArrayUsingPredicate:predicate];
+        if(tmpArr.count>0)
+        {
+            MMGenre *genre = [tmpArr objectAtIndex:0];
+            [genre.songsList addObject: song];
+        }
+    }
+    
+    [self.genreList setInitialPercentage];
+    [self.genreList setInitialCellPosition];
+    
+    //generate and set initial playlist
+    self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :(int)self.audioManager.songsList.count];
+
     
     [self.tableView reloadData];
     //enable delete button on swipe
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
-    self.audioManager.currentSong = [self.audioManager.songsList objectAtIndex:0];
+    self.audioManager.currentSong = [self.audioManager.playList objectAtIndex:0];
     AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.audioManager.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
     
     [self.audioManager.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
@@ -155,7 +215,6 @@
                 NSLog(@"left %f,%f", self.panXY.x, self.panXY.y);
                 if(self.playNextSong)
                 {
-                    //[self switchAudiofile:-1 :(int)[self.songsList indexOfObject:self.currentSong]];
                     [self.audioManager playNext];
                     self.playNextSong = false;
                     [self updateView];
@@ -235,7 +294,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.audioManager.songsList.count;
+    return self.audioManager.playList.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -249,7 +308,7 @@
         cell = [nib objectAtIndex:0];
     }
     
-    MPMediaItem *song = [self.audioManager.songsList objectAtIndex:indexPath.row];
+    MPMediaItem *song = [self.audioManager.playList objectAtIndex:indexPath.row];
     NSString *songTitle = [song valueForProperty: MPMediaItemPropertyTitle];
     NSString *songArtist = [song valueForProperty:MPMediaItemPropertyArtist];
     NSString *songGenre = [song valueForProperty: MPMediaItemPropertyGenre];
@@ -266,7 +325,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.audioManager pause];
-    self.audioManager.currentSong = [self.audioManager.songsList objectAtIndex:indexPath.row];
+    self.audioManager.currentSong = [self.audioManager.playList objectAtIndex:indexPath.row];
     AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.audioManager.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
     
     [self.audioManager.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
@@ -297,7 +356,7 @@
 
 - (void) updateView
 {
-    if(self.audioManager.songsList.count>0)
+    if(self.audioManager.playList.count>0)
     {
         //update song name
         self.songName.text = self.audioManager.currentSongTitle;

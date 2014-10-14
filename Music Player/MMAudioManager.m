@@ -33,7 +33,7 @@
     _currentSong = currentSong;
     
     //song index in playlist
-    _currentSongIndex =  (int)[self.songsList indexOfObject:self.currentSong];
+    _currentSongIndex =  (int)[self.playList indexOfObject:self.currentSong];
     
     //song title
     _currentSongTitle = [_currentSong valueForProperty: MPMediaItemPropertyTitle];
@@ -72,20 +72,20 @@
 
 - (void) playNext
 {
-    [self switchAudioFile:1 :(int)[self.songsList indexOfObject:self.currentSong]];
+    [self switchAudioFile:1 :(int)[self.playList indexOfObject:self.currentSong]];
 }
 
 - (void) playPrevious
 {
-    [self switchAudioFile:-1 :(int)[self.songsList indexOfObject:self.currentSong]];
+    [self switchAudioFile:-1 :(int)[self.playList indexOfObject:self.currentSong]];
 }
 
 - (void) play:(int)index
 {
-    if(self.songsList.count>0)
+    if(self.playList.count>0)
     {
         [self pause];
-        self.currentSong = [self.songsList objectAtIndex:index];
+        self.currentSong = [self.playList objectAtIndex:index];
         AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
         
         [self.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
@@ -97,7 +97,7 @@
 
 - (void) switchAudioFile:(int)direction :(int)indexPrevious
 {
-    if(indexPrevious+direction>=0 && indexPrevious+direction<self.songsList.count)
+    if(indexPrevious+direction>=0 && indexPrevious+direction<self.playList.count)
     {
         [self play:(indexPrevious+direction)];
     }
