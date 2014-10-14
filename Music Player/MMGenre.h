@@ -10,10 +10,10 @@
 
 @interface MMGenre : NSObject
 
-@property (strong, nonatomic) NSString *name;
-@property int filesInDatabase;
-@property int percentage;
-@property long cellPosition;
-@property int rank;
+@property (strong, nonatomic) NSString *name; //genre name
+@property NSMutableArray *songsList; //MutableArray of MPMediaItem Items
+@property int percentage; //percentage of this genre in playlist
+@property long cellPosition; //position in tableView
+@property int rank; //rank (computed by percentage)
 
 @end

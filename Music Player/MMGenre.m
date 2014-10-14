@@ -10,4 +10,13 @@
 
 @implementation MMGenre
 
+- (id) init
+{
+    if (self = [super init])
+    {
+        _songsList = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
 @end

@@ -11,6 +11,8 @@
 
 @interface MMCustomizePlaylistViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic) IBOutlet UIView *controlView;
+@property (weak, nonatomic) IBOutlet UITextField *textfieldFiles;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *songsList;

@@ -94,7 +94,7 @@
         if(tmpArr.count>0)
         {
             MMGenre *genre = [tmpArr objectAtIndex:0];
-            genre.filesInDatabase++;
+            [genre.songsList addObject: song];
         }
     }
     //NSLog(@"%lu",(unsigned long)self.songsList.count);
@@ -104,6 +104,21 @@
     
     //update table
     [self.tableView reloadData];
+    
+    // -----------------------------
+    // One finger, tap
+    // -----------------------------
+    
+    // Create gesture recognizer
+    UITapGestureRecognizer *oneFingerTab =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(oneFingerTab:)];
+    
+    // Set required taps and number of touches
+    [oneFingerTab setNumberOfTapsRequired:1];
+    [oneFingerTab setNumberOfTouchesRequired:1];
+    
+    // Add the gesture to the view
+    [self.controlView addGestureRecognizer:oneFingerTab];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,6 +126,40 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//one finger, tab
+- (void) oneFingerTab:(UITapGestureRecognizer *)recognizer
+{
+    //close textfield keyboard if its open and check for numbers only
+    //if any other characters found, delete them
+    if([self.textfieldFiles isFirstResponder])
+    {
+        NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+        NSString *string = [[NSString alloc]init];
+        for (int i=0;i<[self.textfieldFiles.text length];i++)
+        {
+            unichar c = [self.textfieldFiles.text characterAtIndex:i];
+            if([myCharSet characterIsMember:c])
+            {
+                string = [NSString stringWithFormat:@"%@%@",string,([NSString stringWithCharacters:&c length:1])];
+            }
+        }
+        //if textfield is empty set value to 0
+        if([string length] == 0)
+            string = @"0";
+        //if textfield value is higher then songslist.count, set value to songslist.count
+        if([self.textfieldFiles.text intValue]>self.songsList.count)
+            string = [NSString stringWithFormat:@"%lu",(unsigned long)self.songsList.count];
+        
+        //set new value
+        self.textfieldFiles.text = string;
+        
+        //close textfield keyboard
+        [self.textfieldFiles resignFirstResponder];
+    }
+    
+}
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -136,10 +185,10 @@
     cell.labelGenre.text = [[self.genreList.genreList objectAtIndex:indexPath.row] name];
     
     //percent label
-    cell.labelPercent.text = [[NSNumber numberWithFloat:cell.sliderPercent.value] stringValue];
+    cell.labelPercent.text = [NSString stringWithFormat:@"%@%%",[[NSNumber numberWithFloat:cell.sliderPercent.value] stringValue]];
     
     //files in db label
-    cell.labelFiles.text = [NSString stringWithFormat:@"%i",[[self.genreList.genreList objectAtIndex:indexPath.row]filesInDatabase]];
+    cell.labelFiles.text = [NSString stringWithFormat:@"%lu",(unsigned long)[[[self.genreList.genreList objectAtIndex:indexPath.row]songsList]count]];
     
     return cell;
 }
@@ -161,6 +210,7 @@
     //[self.tableSliderValuesArray replaceObjectAtIndex:cellPosition withObject:sliderValue];
     [[self.genreList.genreList objectAtIndex:cellPosition] setPercentage:sliderValue];
     
+    /*
     // add all slider values to avoid a overall value > 100
     int tmp = 0;
     for(MMGenre *genre in self.genreList.genreList)
@@ -214,7 +264,7 @@
         //set new percentage to genre
         [[self.genreList.genreList objectAtIndex:cellPositionMinValue] setPercentage:newValue];
     }
-    
+    */
     //update table data
     [self.tableView reloadData];
 }
@@ -226,25 +276,52 @@
     
     
     //generate genre list
-    NSMutableArray *tmpArr = [[NSMutableArray alloc]initWithArray:self.songsList];
+    NSMutableArray *tmpArr = [[NSMutableArray alloc]init];//[[NSMutableArray alloc]initWithArray:self.songsList];
     NSMutableArray *tmpSongsList = [[NSMutableArray alloc]init];
     
+    //fill tmpArr with songs by defined percentage data
+    
+    //calculate basis song array on the basis of genre and percentage
+    for (int i=0; i<self.genreList.genreList.count; i++) {
+        MMGenre *genre = [self.genreList.genreList objectAtIndex:i];
+        if(genre.percentage>0)
+        {
+            int rounded = ceil(((int)[genre.songsList count] * genre.percentage)/100);
+            if(rounded>=0&&rounded<1)
+                rounded=1;
+            
+            NSMutableArray *tmpGenreArr = [[NSMutableArray alloc]initWithArray:genre.songsList];
+            MPMediaItem *song;
+            for(int j = 0;j<rounded;j++)
+            {
+                song = [tmpGenreArr objectAtIndex:arc4random_uniform((int)tmpGenreArr.count)];
+                [tmpArr addObject:song];
+                [tmpGenreArr removeObject:song];
+            }
+        }
+    }
+    NSLog(@"Dateien: %lu",(unsigned long)tmpArr.count);
+    
     MPMediaItem *song;
-    while(tmpSongsList.count<10)
+    while(tmpSongsList.count<[self.textfieldFiles.text intValue])
     {
+        if(tmpArr.count == 0)
+            break;
+        
         song = [tmpArr objectAtIndex:arc4random_uniform((int)tmpArr.count)];
         [tmpSongsList addObject:song];
         [tmpArr removeObject:song];
-        
-        if(tmpArr.count == 0)
-            break;
     }
     
     NSLog(@"%lu",(unsigned long)tmpSongsList.count);
+    
+    //set new playlist
     self.viewController.audioManager.songsList = tmpSongsList;
     
+    //set notofication that new playlist is generated
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
     
+    //switch view to "main" viewController
     self.tabBarController.selectedIndex = 0;
 }
 

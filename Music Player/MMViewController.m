@@ -297,23 +297,48 @@
 
 - (void) updateView
 {
-    //update song name
-    self.songName.text = self.audioManager.currentSongTitle;
-    
-    //update slider maximum value
-    [self.sliderOutlet setMaximumValue:self.audioManager.audioPlayer.currentItem.asset.duration.value/self.audioManager.audioPlayer.currentItem.asset.duration.timescale];
-    
-    //update song/album artwork
-    self.imageViewArtwork.image = self.audioManager.currentArtwork;
+    if(self.audioManager.songsList.count>0)
+    {
+        //update song name
+        self.songName.text = self.audioManager.currentSongTitle;
+        
+        //update slider maximum value
+        [self.sliderOutlet setMaximumValue:self.audioManager.audioPlayer.currentItem.asset.duration.value/self.audioManager.audioPlayer.currentItem.asset.duration.timescale];
+        
+        //update song/album artwork
+        self.imageViewArtwork.image = self.audioManager.currentArtwork;
 
-    // update play/pause button
-    if(self.audioManager.isPlaying)
-        [self.togglePlayPause setSelected:NO];
+        // update play/pause button
+        if(self.audioManager.isPlaying)
+            [self.togglePlayPause setSelected:NO];
+        else
+            [self.togglePlayPause setSelected:YES];
+        
+        //update tableview selected row
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.audioManager.currentSongIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
     else
-        [self.togglePlayPause setSelected:YES];
-    
-    //update tableview selected row
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.audioManager.currentSongIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    {
+        //update song name
+        self.songName.text = @"";
+        
+        //update slider maximum value
+        [self.sliderOutlet setMaximumValue:1];
+        
+        //update song/album artwork
+        self.imageViewArtwork.image = [UIImage imageNamed:@"blackbox.jpg"];
+        
+        // update play/pause button
+        if(self.audioManager.isPlaying)
+            [self.togglePlayPause setSelected:NO];
+        else
+            [self.togglePlayPause setSelected:YES];
+        
+        //update duration label
+        self.durationOutlet.text =[NSString stringWithFormat:@"%02d:%02d",0,0];
+
+        self.sliderOutlet.value = 0;
+    }
 }
 
 -(id) configurePlayer {

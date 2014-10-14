@@ -489,6 +489,7 @@
 				INFOPLIST_FILE = "Music Player/Music Player-Info.plist";
 				OTHER_CODE_SIGN_FLAGS = "-gta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -504,6 +505,7 @@
 				INFOPLIST_FILE = "Music Player/Music Player-Info.plist";
 				OTHER_CODE_SIGN_FLAGS = "-gta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
