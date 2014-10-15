@@ -56,6 +56,8 @@
     
     // Add the gesture to the view
     [self.controlView addGestureRecognizer:oneFingerTab];
+    
+    self.textfieldFiles.text = [NSString stringWithFormat:@"%i",self.viewController.audioManager.playListAmountOfFiles];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,25 +73,10 @@
     //if any other characters found, delete them
     if([self.textfieldFiles isFirstResponder])
     {
-        NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-        NSString *string = [[NSString alloc]init];
-        for (int i=0;i<[self.textfieldFiles.text length];i++)
-        {
-            unichar c = [self.textfieldFiles.text characterAtIndex:i];
-            if([myCharSet characterIsMember:c])
-            {
-                string = [NSString stringWithFormat:@"%@%@",string,([NSString stringWithCharacters:&c length:1])];
-            }
-        }
-        //if textfield is empty set value to 0
-        if([string length] == 0)
-            string = @"0";
-        //if textfield value is higher then songslist.count, set value to songslist.count
-        if([self.textfieldFiles.text intValue]>self.viewController.audioManager.songsList.count)
-            string = [NSString stringWithFormat:@"%lu",(unsigned long)self.viewController.audioManager.songsList.count];
-        
-        //set new value
-        self.textfieldFiles.text = string;
+        //clear textfield
+        [self clearTextfieldResultingNumbersOnly:self.textfieldFiles :(int)self.viewController.audioManager.songsList.count];
+        //set new value for max amount of playlist files
+        self.viewController.audioManager.playListAmountOfFiles = [self.textfieldFiles.text intValue];
         
         //close textfield keyboard
         [self.textfieldFiles resignFirstResponder];
@@ -97,6 +84,29 @@
     
 }
 
+// check textfield for numbers only, if any other characters found, delete them
+- (void) clearTextfieldResultingNumbersOnly:(UITextField *)textField :(int) maxPlaylistSize
+{
+    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    NSString *string = [[NSString alloc]init];
+    for (int i=0;i<[textField.text length];i++)
+    {
+        unichar c = [textField.text characterAtIndex:i];
+        if([myCharSet characterIsMember:c])
+        {
+            string = [NSString stringWithFormat:@"%@%@",string,([NSString stringWithCharacters:&c length:1])];
+        }
+    }
+    //if textfield is empty set value to 0
+    if([string length] == 0)
+        string = @"0";
+    //if textfield value is higher then songslist.count, set value to songslist.count
+    if([textField.text intValue]>maxPlaylistSize)
+        string = [NSString stringWithFormat:@"%i",maxPlaylistSize];
+    
+    //set new value
+    textField.text = string;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -135,9 +145,8 @@
     return self.viewController.genreList.genreList.count;
 }
 
-/*
- called if a tableSlider Value is changed
- */
+
+// called if a tableSlider Value is changed
 -(void) tableSliderChanged:(UISlider *)sender
 {
     int sliderValue = [[NSNumber numberWithInt:sender.value] intValue];
@@ -206,13 +215,25 @@
     [self.tableView reloadData];
 }
 
-/*
- Button pressed, generates new playlist and switch back to playlist tab
- */
+// Button pressed, generates new playlist and switch back to playlist tab
 - (IBAction)buttonGenerateNewPlaylist:(id)sender {
     
+    //close textfield keyboard if its open and check for numbers only
+    //if any other characters found, delete them
+    if([self.textfieldFiles isFirstResponder])
+    {
+        //clear textfield
+        [self clearTextfieldResultingNumbersOnly:self.textfieldFiles :(int)self.viewController.audioManager.songsList.count];
+        //set new value for max amount of playlist files
+        self.viewController.audioManager.playListAmountOfFiles = [self.textfieldFiles.text intValue];
+        
+        //close textfield keyboard
+        [self.textfieldFiles resignFirstResponder];
+    }
+    
+    NSLog(@"playListAmountOfFiles %i",self.viewController.audioManager.playListAmountOfFiles);
     //generate and set new playlist
-    self.viewController.audioManager.playList = [self generateNewPlaylist:self.viewController.genreList :[self.textfieldFiles.text intValue]];
+    self.viewController.audioManager.playList = [self generateNewPlaylist:self.viewController.genreList :self.viewController.audioManager.playListAmountOfFiles];
     
     //set notofication that new playlist is generated
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
@@ -221,6 +242,7 @@
     self.tabBarController.selectedIndex = 0;
 }
 
+// generates new playlist by given genreList and playlist size
 - (NSMutableArray *) generateNewPlaylist:(MMGenreList *)genreList :(int)size
 {
 

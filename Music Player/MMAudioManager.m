@@ -43,6 +43,9 @@
             UIImage *tmpImage = [UIImage imageNamed:imagePath];
             [_noAlbumArtworkImages addObject:tmpImage];
         }
+        
+        //set amount of songs in playlist
+        _playListAmountOfFiles = 10;
     }
     return self;
 }
@@ -64,7 +67,7 @@
     if(itemArtwork != nil)
     {
         //generate UI image
-        albumArtworkImage = [itemArtwork imageWithSize:CGSizeMake(500.0, 500.0)];
+        albumArtworkImage = [itemArtwork imageWithSize:CGSizeMake(600.0, 600.0)];
     }
     if(albumArtworkImage)
     {

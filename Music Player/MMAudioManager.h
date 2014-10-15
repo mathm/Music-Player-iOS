@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSMutableArray *songsList; //list with all songs
 @property (strong, nonatomic) NSMutableArray *playList; //current playlist
+@property int playListAmountOfFiles;
 @property (strong, nonatomic) AVPlayer *audioPlayer;
 @property (strong, nonatomic) MPMediaItem *currentSong;
 @property (strong, nonatomic) NSString *currentSongTitle;

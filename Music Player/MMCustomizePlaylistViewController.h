@@ -20,4 +20,6 @@
 
 - (NSMutableArray *) generateNewPlaylist:(MMGenreList *)genreList :(int)size;
 
+- (void) clearTextfieldResultingNumbersOnly:(UITextField *)textField :(int) maxPlaylistSize;
+
 @end

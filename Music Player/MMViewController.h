@@ -28,6 +28,7 @@
 
 //Actions
 - (IBAction)togglePlayPauseTapped:(UIButton *)sender;
+- (IBAction)buttonNewPlaylistPressed:(id)sender;
 - (IBAction)sliderDragged:(id)sender;
 - (IBAction)sliderTouchDown:(id)sender;
 - (IBAction)sliderTouchUpInside:(id)sender;

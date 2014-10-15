@@ -111,8 +111,10 @@
     [self.genreList setInitialPercentage];
     [self.genreList setInitialCellPosition];
     
+    //set amount of songs in playlist
+    self.audioManager.playListAmountOfFiles = (int)self.audioManager.songsList.count;
     //generate and set initial playlist
-    self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :(int)self.audioManager.songsList.count];
+    self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :self.audioManager.playListAmountOfFiles];
 
     
     [self.tableView reloadData];
@@ -262,6 +264,14 @@
     else
         [self.audioManager play];
     [self updateView];
+}
+
+//generate and set new playlist
+- (IBAction)buttonNewPlaylistPressed:(id)sender {
+    self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :self.audioManager.playListAmountOfFiles];
+    NSLog(@"%@",self.customizePlaylistViewController.textfieldFiles.text);
+    //set notofication that new playlist is generated
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
 }
 
 - (IBAction)sliderDragged:(id)sender {
@@ -423,7 +433,7 @@
         [self.sliderOutlet setMaximumValue:1];
         
         //update song/album artwork
-        self.imageViewArtwork.image = [UIImage imageNamed:@"blackbox.jpg"];
+        self.imageViewArtwork.image = [self.audioManager.noAlbumArtworkImages objectAtIndex:arc4random_uniform((int)self.audioManager.noAlbumArtworkImages.count)];
         
         // update play/pause button     
         if([self.togglePlayPause isHidden]==false)
