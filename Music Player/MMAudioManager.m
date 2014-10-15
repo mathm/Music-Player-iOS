@@ -23,6 +23,26 @@
                                                  selector:@selector(playerItemDidReachEnd)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:nil];
+        
+        //load alle .jpg images with prefix "no_artwork" from mainBundle
+        NSMutableArray *imagePaths = [[NSMutableArray alloc]init];
+        [[[NSBundle mainBundle] pathsForResourcesOfType:@"jpg" inDirectory:nil]enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop)
+         {
+             NSString *path = [obj lastPathComponent];
+             if([path hasPrefix:@"no_artwork"])
+             {
+                 [imagePaths addObject:path];
+                 NSLog(@"%@",path);
+             }
+         }];
+
+        //fill the noAlbumArtworkImages with images
+        _noAlbumArtworkImages = [[NSMutableArray alloc]init];
+        for(NSString *imagePath in imagePaths)
+        {
+            UIImage *tmpImage = [UIImage imageNamed:imagePath];
+            [_noAlbumArtworkImages addObject:tmpImage];
+        }
     }
     return self;
 }
@@ -40,10 +60,11 @@
     
     //artwork - song image
     UIImage *albumArtworkImage = NULL;
-    MPMediaItemArtwork *itemArtwork = [_currentSong valueForProperty:MPMediaItemPropertyArtwork];
+    MPMediaItemArtwork *itemArtwork = [_currentSong valueForProperty:MPMediaItemPropertyArtwork]; //get album artwork from currentSong
     if(itemArtwork != nil)
     {
-        albumArtworkImage = [itemArtwork imageWithSize:CGSizeMake(250.0, 250.0)];
+        //generate UI image
+        albumArtworkImage = [itemArtwork imageWithSize:CGSizeMake(500.0, 500.0)];
     }
     if(albumArtworkImage)
     {
@@ -51,8 +72,8 @@
     }
     else
     {
-        NSLog(@"No Album Artwork");
-        _currentArtwork = [UIImage imageNamed:@"blackbox.jpg"];
+       //if there was no album artwork, set random artwork
+        _currentArtwork = [self.noAlbumArtworkImages objectAtIndex:arc4random_uniform((int)self.noAlbumArtworkImages.count)];
     }
 
 }
@@ -93,6 +114,14 @@
     }
     else
         [self pause];
+}
+
+- (BOOL) isPlayingSong:(int)index
+{
+    if([self.playList objectAtIndex:index] == self.currentSong)
+        return true;
+    else
+        return false;
 }
 
 - (void) switchAudioFile:(int)direction :(int)indexPrevious

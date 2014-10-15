@@ -22,11 +22,14 @@
 @property int currentSongIndex;
 @property BOOL isPlaying;
 
+@property (strong, nonatomic) NSMutableArray *noAlbumArtworkImages;
+
 - (void) play;
 - (void) pause;
 - (void) playNext;
 - (void) playPrevious;
 - (void) play:(int)index;
+- (BOOL) isPlayingSong:(int)index;
 
 - (void) switchAudioFile:(int)direction :(int)indexPrevious;
 - (void) playerItemDidReachEnd;

@@ -313,6 +313,12 @@
     NSString *songArtist = [song valueForProperty:MPMediaItemPropertyArtist];
     NSString *songGenre = [song valueForProperty: MPMediaItemPropertyGenre];
 
+    /*int duration = [[song valueForProperty:MPMediaItemPropertyPlaybackDuration] intValue];
+    int durationMins = (int)(duration/60);
+    int durationSec  = (int)(duration%60);
+    
+    NSString *durationString = [NSString stringWithFormat:@"%2d:%02d",durationMins,durationSec];*/
+    
     cell.labelSongTitle.text = songTitle;
     cell.labelArtist.text = songArtist;
     if (songGenre == nil) {
@@ -324,12 +330,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.audioManager pause];
-    self.audioManager.currentSong = [self.audioManager.playList objectAtIndex:indexPath.row];
-    AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[self.audioManager.currentSong valueForProperty:MPMediaItemPropertyAssetURL]];
-    
-    [self.audioManager.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
-    [self.audioManager play];
+    //play selected song
+    [self.audioManager play:(int)indexPath.row];
+    //update view
     [self updateView];
     
 }
@@ -342,6 +345,7 @@
     return YES;
 }
 
+
 /*
  Action if table row action is selected
  */
@@ -350,7 +354,26 @@
     //if tablerow action delete is selected
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSLog(@"Delete");
+        BOOL isPlayingSong = false;
+        //if the song that actualy is playing should be deleted, set isPlayingSong = true
+        if([self.audioManager isPlayingSong:(int)indexPath.row])
+            isPlayingSong = true;
+ 
+        //delete song from playlist
+        [self.audioManager.playList removeObjectAtIndex:indexPath.row];
+        //delete row from table, important because of the row selection and a animation after the delete
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+
+        //reload table data
+        [self.tableView reloadData];
+        
+        //play next song in playlist, if deleted song was actualy been played
+        if(isPlayingSong)
+            if(self.audioManager.playList.count>0)
+                [self.audioManager play:(int)indexPath.row];
+        
+        //update view
+        [self updateView];
     }
 }
 
@@ -361,8 +384,16 @@
         //update song name
         self.songName.text = self.audioManager.currentSongTitle;
         
+        //update slider outlet
         //update slider maximum value
         [self.sliderOutlet setMaximumValue:self.audioManager.audioPlayer.currentItem.asset.duration.value/self.audioManager.audioPlayer.currentItem.asset.duration.timescale];
+
+        if([self.sliderOutlet isHidden])
+           [self.sliderOutlet setHidden:false];
+        
+        //update duration outlet
+        if([self.durationOutlet isHidden])
+            [self.durationOutlet setHidden:false];
         
         //update song/album artwork
         self.imageViewArtwork.image = self.audioManager.currentArtwork;
@@ -373,13 +404,20 @@
         else
             [self.togglePlayPause setSelected:YES];
         
+        if([self.togglePlayPause isHidden])
+            [self.togglePlayPause setHidden:false];
+        
         //update tableview selected row
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.audioManager.currentSongIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
     }
     else
     {
+        
+        //pause audioplayer
+        [self.audioManager pause];
+        
         //update song name
-        self.songName.text = @"";
+        self.songName.text = @"There are no songs in the playlist!";
         
         //update slider maximum value
         [self.sliderOutlet setMaximumValue:1];
@@ -387,16 +425,20 @@
         //update song/album artwork
         self.imageViewArtwork.image = [UIImage imageNamed:@"blackbox.jpg"];
         
-        // update play/pause button
-        if(self.audioManager.isPlaying)
-            [self.togglePlayPause setSelected:NO];
-        else
-            [self.togglePlayPause setSelected:YES];
+        // update play/pause button     
+        if([self.togglePlayPause isHidden]==false)
+            [self.togglePlayPause setHidden:true];
         
-        //update duration label
-        self.durationOutlet.text =[NSString stringWithFormat:@"%02d:%02d",0,0];
+        //update duration outlet
+        if([self.durationOutlet isHidden]==false)
+            [self.durationOutlet setHidden:true];
+        
+        //update slider outlet
+        if([self.sliderOutlet isHidden]==false)
+            [self.sliderOutlet setHidden:true];
 
         self.sliderOutlet.value = 0;
+        
     }
 }
 
