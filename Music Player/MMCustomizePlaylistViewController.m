@@ -252,7 +252,7 @@
     
     //fill tmpArr with songs by defined percentage data
     //calculate basis song array on the basis of genre and percentage
-    for (int i=0; i<genreList.genreList.count; i++) {
+    /*for (int i=0; i<genreList.genreList.count; i++) {
         MMGenre *genre = [genreList.genreList objectAtIndex:i];
         if(genre.percentage>0)
         {
@@ -280,8 +280,54 @@
         song = [tmpArr objectAtIndex:arc4random_uniform((int)tmpArr.count)];
         [tmpSongsList addObject:song];
         [tmpArr removeObject:song];
+    }*/
+    
+    //count genres > then zero
+    float tmpOverallPercentage = 0;
+    for (int i=0; i<genreList.genreList.count; i++) {
+        MMGenre *genre = [genreList.genreList objectAtIndex:i];
+        if(genre.percentage>0)
+        {
+            tmpOverallPercentage += genre.percentage;
+        }
     }
     
+    NSLog(@"overallPercantage: %f",tmpOverallPercentage);
+    
+    for (int i=0; i<genreList.genreList.count; i++) {
+        MMGenre *genre = [genreList.genreList objectAtIndex:i];
+        if(genre.percentage>0)
+        {
+            float realPercentage = lroundf((100 * genre.percentage)/tmpOverallPercentage);
+            
+            int songsFromThisGenre = (size * realPercentage) / 100;
+            
+            NSLog(@"Genre: %@ percentage %i, real percentage %f, songsfromthisGenre %i",genre.name,genre.percentage,realPercentage,songsFromThisGenre);
+            
+            NSMutableArray *tmpGenreArr = [[NSMutableArray alloc]initWithArray:genre.songsList];
+            MPMediaItem *song;
+            for(int j = 0;j<songsFromThisGenre;j++)
+            {
+                if(j>=genre.songsList.count)
+                    break;
+                
+                song = [tmpGenreArr objectAtIndex:arc4random_uniform((int)tmpGenreArr.count)];
+                [tmpArr addObject:song];
+                [tmpGenreArr removeObject:song];
+            }
+        }
+    }
+    NSLog(@"tmparr size: %lu",(unsigned long)tmpArr.count);
+    //suffle songs
+    MPMediaItem *song;
+    unsigned long tmpArrCount = tmpArr.count;
+    for(int i=0;i<tmpArrCount;i++)
+    {
+        song = [tmpArr objectAtIndex:arc4random_uniform((int)tmpArr.count)];
+        [tmpSongsList addObject:song];
+        [tmpArr removeObject:song];
+    }
+    NSLog(@"Playlist size: %lu",(unsigned long)tmpSongsList.count);
     //return new playlist
     return tmpSongsList;
 }
