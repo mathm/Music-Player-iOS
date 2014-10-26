@@ -14,10 +14,10 @@
 
 @interface MMViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UIButton *togglePlayPause;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPlayPause;
 @property (strong, nonatomic) IBOutlet UILabel *songName;
 @property (strong, nonatomic) IBOutlet UILabel *durationOutlet;
-@property (strong, nonatomic) IBOutlet UISlider *sliderOutlet;
+@property (strong, nonatomic) IBOutlet UIProgressView *progressViewOutlet;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewArtwork;
 
@@ -27,11 +27,6 @@
 @property NSString *nilGenreName;
 
 //Actions
-- (IBAction)togglePlayPauseTapped:(UIButton *)sender;
 - (IBAction)buttonNewPlaylistPressed:(id)sender;
-- (IBAction)sliderDragged:(id)sender;
-- (IBAction)sliderTouchDown:(id)sender;
-- (IBAction)sliderTouchUpInside:(id)sender;
-- (IBAction)sliderTouchUpOutside:(id)sender;
 
 @end
