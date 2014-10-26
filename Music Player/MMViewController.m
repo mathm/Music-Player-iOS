@@ -19,6 +19,7 @@
 @property BOOL panOverride; // value needed for correct pan calculation
 @property BOOL playNextSong; // value needed for correct pan calculation
 @property BOOL skipSeconds; // value needed for correct pan calculation
+@property BOOL showHelpOverlay; // state for help overlay (hidden or visible)
 @property UIBackgroundTaskIdentifier bgTaskId; // task identifier used for playing music in background
 
 @end
@@ -202,6 +203,7 @@
     self.panOverride = true;
     self.playNextSong = true;
     self.skipSeconds = true;
+    self.showHelpOverlay = false;
 
 }
 
@@ -330,7 +332,28 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
 }
 
-//returns number of cells in tableView
+// if pressed the help overlay switch state between visible and hidden
+- (IBAction)buttonHelpPressed:(id)sender {
+    
+    if(self.showHelpOverlay)
+        self.showHelpOverlay = false;
+    else
+        self.showHelpOverlay = true;
+    
+    [self updateView];
+}
+
+// if pressed the help overlay switch state between visible and hidden
+- (IBAction)buttonBackToMainViewPressed:(id)sender {
+    if(self.showHelpOverlay)
+        self.showHelpOverlay = false;
+    else
+        self.showHelpOverlay = true;
+    
+    [self updateView];
+}
+
+// returns number of cells in tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.audioManager.playList.count;
@@ -457,6 +480,7 @@
         
         // update tableview selected row
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.audioManager.currentSongIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+        
     }
     else // if playlist is empty
     {
@@ -482,6 +506,18 @@
         if([self.progressViewOutlet isHidden])
             [self.progressViewOutlet setHidden:false];
         
+    }
+    
+    //set help overlay
+    if(self.showHelpOverlay)
+    {
+        [self.imageViewHelpOverlay setHidden:false];
+        [self.buttonBackToMainView setHidden:false];
+    }
+    else
+    {
+        [self.imageViewHelpOverlay setHidden:true];
+        [self.buttonBackToMainView setHidden:true];
     }
 }
 

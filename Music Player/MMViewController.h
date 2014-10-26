@@ -20,6 +20,9 @@
 @property (strong, nonatomic) IBOutlet UIProgressView *progressViewOutlet;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewArtwork;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewHelpOverlay;
+@property (weak, nonatomic) IBOutlet UIButton *buttonHelp;
+@property (weak, nonatomic) IBOutlet UIButton *buttonBackToMainView;
 
 @property (strong, nonatomic) IBOutlet UIView *controlView;
 @property (strong, nonatomic) MMAudioManager *audioManager;
@@ -28,5 +31,7 @@
 
 //Actions
 - (IBAction)buttonNewPlaylistPressed:(id)sender;
+- (IBAction)buttonHelpPressed:(id)sender;
+- (IBAction)buttonBackToMainViewPressed:(id)sender;
 
 @end
