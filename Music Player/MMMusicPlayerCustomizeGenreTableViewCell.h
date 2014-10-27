@@ -10,6 +10,7 @@
 
 @interface MMMusicPlayerCustomizeGenreTableViewCell : UITableViewCell
 
+
 @property (nonatomic, weak) IBOutlet UILabel *labelGenre;
 @property (nonatomic, weak) IBOutlet UILabel *labelPercent;
 @property (nonatomic, weak) IBOutlet UISlider *sliderPercent;

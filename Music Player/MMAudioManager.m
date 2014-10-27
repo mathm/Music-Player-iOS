@@ -8,6 +8,7 @@
 
 #import "MMAudioManager.h"
 
+/// AudioManager includes AVAudioPlayer and provides extended methods to handle audiofiles
 @implementation MMAudioManager
 
 
@@ -49,7 +50,7 @@
     return self;
 }
 
-// override setter from currentSong
+/// override setter from currentSong
 - (void) setCurrentSong:(MPMediaItem *)currentSong
 {
     // song
@@ -81,35 +82,33 @@
 
 }
 
-// set player to play
+/// set player to play
 - (void) play
 {
     [self.audioPlayer play];
     self.isPlaying = true;
 }
 
-// set player to pause
+/// set player to pause
 - (void) pause
 {
     [self.audioPlayer pause];
     self.isPlaying = false;
 }
 
-// play next song on playlist
+/// play next song on playlist
 - (void) playNext
 {
     [self switchAudioFile:1 :(int)[self.playList indexOfObject:self.currentSong]];
 }
 
-// play previous song on playlist
+/// play previous song on playlist
 - (void) playPrevious
 {
     [self switchAudioFile:-1 :(int)[self.playList indexOfObject:self.currentSong]];
 }
 
-// skips some seconds from the current song
-// directions: -1 backward | 1 forward
-// percent: amount of seconds skipped in percent, float value between 0 and 1
+/// skips some seconds from the current song directions: -1 backward | 1 forward percent: amount of seconds skipped in percent, float value between 0 and 1
 - (void) skip:(int)direction :(float)percent
 {
     int currentTime = (int)((self.audioPlayer.currentTime.value)/self.audioPlayer.currentTime.timescale);
@@ -136,7 +135,7 @@
     [self.audioPlayer seekToTime:CMTimeMakeWithSeconds(newTime,1)];
 }
 
-// play the song with the specified index
+/// play the song with the specified index
 - (void) play:(int)index
 {
     if(self.playList.count>0)
@@ -152,7 +151,7 @@
         [self pause];
 }
 
-// returns true if the song with the sent index is curently playing
+/// returns true if the song with the sent index is curently playing
 - (BOOL) isPlayingSong:(int)index
 {
     if([self.playList objectAtIndex:index] == self.currentSong)
@@ -161,19 +160,19 @@
         return false;
 }
 
-// increase volume by given percent (values between 0 and 1)
+/// increase volume by given percent (values between 0 and 1)
 - (void) increaseVolume:(float)percent
 {
     [self modifyVolume:1 :percent];
 }
 
-// decrease volume by given percent (values between 0 and 1)
+/// decrease volume by given percent (values between 0 and 1)
 - (void) decreaseVolume:(float)percent
 {
     [self modifyVolume:-1 :percent];
 }
 
-// modify Volume by given direction (-1 deccreade | 1 increase) and percent (values between 0 and 1)
+/// modify Volume by given direction (-1 deccreade | 1 increase) and percent (values between 0 and 1)
 - (void) modifyVolume:(int)direction :(float)percent
 {
     if(direction<0)
@@ -191,12 +190,7 @@
             self.audioPlayer.volume = 1;
     }
 }
-
-// play next song from playlist, depending on
-//  direction:
-//      -1 play previous song
-//      1 play next song
-// and the in of the song that is playing at the moment (indexPrevious)
+/// play next song from playlist, depending on direction: -1 play previous song | 1 play next song and the in of the song that is playing at the moment (indexPrevious)
 - (void) switchAudioFile:(int)direction :(int)indexPrevious
 {
     // if the index of next song would be on the playlist
@@ -212,8 +206,7 @@
     }
 }
 
-// action, if player reach end of the played song
-// send notification: MMAudioManagerPlayerItemDidReachEndNotification
+/// action, if player reach end of the played song send notification: MMAudioManagerPlayerItemDidReachEndNotification
 - (void) playerItemDidReachEnd
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMAudioManagerPlayerItemDidReachEndNotification" object:self];

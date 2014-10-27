@@ -9,11 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface MMGenre : NSObject
-
-@property (strong, nonatomic) NSString *name; //genre name
-@property NSMutableArray *songsList; //MutableArray of MPMediaItem Items
-@property int percentage; //percentage of this genre in playlist
-@property long cellPosition; //position in tableView
-@property int rank; //rank (computed by percentage)
+/// genre name
+@property (strong, nonatomic) NSString *name;
+/// MutableArray of MPMediaItem Items
+@property NSMutableArray *songsList;
+/// percentage of this genre in playlist
+@property int percentage;
+/// position in tableView
+@property long cellPosition;
+/// rank (computed by percentage)
+@property int rank;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MMMusicPlayerSongTableViewCell.h"
 
+/// custom table view cell with 3 labels
 @implementation MMMusicPlayerSongTableViewCell
 
 //synthesize is automactically generate code for accessing the properties

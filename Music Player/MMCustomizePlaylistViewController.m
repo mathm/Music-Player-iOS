@@ -8,16 +8,17 @@
 
 #import "MMCustomizePlaylistViewController.h"
 #import "MMMusicPlayerCustomizeGenreTableViewCell.h"
-#import "MMViewController.h"
 #import "MMGenre.h"
 #import "MMGenreList.h"
 
 @interface MMCustomizePlaylistViewController ()
 
-@property (strong, nonatomic) MMViewController *viewController; // MMViewControler
+/// MMViewControler
+@property (strong, nonatomic) MMViewController *viewController;
 
 @end
 
+/// View Controller for configuration and generation of playlists
 @implementation MMCustomizePlaylistViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -67,7 +68,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-// one finger, tab
+/// one finger, tab delegate
 - (void) oneFingerTab:(UITapGestureRecognizer *)recognizer
 {
     // close textfield keyboard if its open and check for numbers only
@@ -85,7 +86,7 @@
     
 }
 
-// check textfield for numbers only, if any other characters found, delete them
+/// check textfield for numbers only, if any other characters found, delete them
 - (void) clearTextfieldResultingNumbersOnly:(UITextField *)textField :(int) maxPlaylistSize
 {
     NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
@@ -109,7 +110,7 @@
     textField.text = string;
 }
 
-// fill in tableView with cells
+/// fill in tableView with cells
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"MusicPlayerCustomizeGenreTableCell";
@@ -142,14 +143,14 @@
     return cell;
 }
 
-// returns number of rows in tableView
+/// returns number of rows in tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.viewController.genreList.genreList.count;
 }
 
 
-// called if a tableSlider Value is changed
+/// called if a tableSlider Value is changed, delegate
 -(void) tableSliderChanged:(UISlider *)sender
 {
     int sliderValue = [[NSNumber numberWithInt:sender.value] intValue];
@@ -164,7 +165,7 @@
     [self.tableView reloadData];
 }
 
-// Button pressed, generates new playlist and switch back to playlist tab
+/// Button pressed, generates new playlist and switch back to playlist tab
 - (IBAction)buttonGenerateNewPlaylist:(id)sender {
     
     // close textfield keyboard if its open and check for numbers only
@@ -190,7 +191,7 @@
     self.tabBarController.selectedIndex = 0;
 }
 
-// generates new playlist by given genreList and playlist size
+/// generates new playlist by given genreList and playlist size
 - (NSMutableArray *) generateNewPlaylist:(MMGenreList *)genreList :(int)size
 {
 
@@ -254,9 +255,7 @@
     return tmpSongsList;
 }
 
-/*
- Button pressed, set genreList percentage to initial values (100/genreList.count)
- */
+/// Button pressed, set genreList percentage to initial values (100/genreList.count)
 -(IBAction) buttonSetInitialPercentage:(id)sender
 {
     [self.viewController.genreList setInitialPercentage];

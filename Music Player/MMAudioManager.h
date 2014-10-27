@@ -13,17 +13,30 @@
 
 @interface MMAudioManager : NSObject
 
-@property (strong, nonatomic) NSMutableArray *songsList; //list with all songs
-@property (strong, nonatomic) NSMutableArray *playList; //current playlist
-@property (strong, nonatomic) AVPlayer *audioPlayer; //audio player
-@property (strong, nonatomic) MPMediaItem *currentSong; //the song thats currently is playing
-@property (strong, nonatomic) NSString *currentSongTitle; //title of the current song
-@property (strong, nonatomic) UIImage *currentArtwork; //artwork of the current song
-@property int currentSongIndex; //index in playlist of the current song
-@property int playListAmountOfFiles; //amount of files in playlist
-@property BOOL isPlaying; //is the player playing or not
+//Properties
 
-@property (strong, nonatomic) NSMutableArray *noAlbumArtworkImages; //images used if played song has no album artwork
+/// list with all songs
+@property (strong, nonatomic) NSMutableArray *songsList;
+/// current playlist
+@property (strong, nonatomic) NSMutableArray *playList;
+/// audio player
+@property (strong, nonatomic) AVPlayer *audioPlayer;
+/// the song thats currently is playing
+@property (strong, nonatomic) MPMediaItem *currentSong;
+/// title of the current song
+@property (strong, nonatomic) NSString *currentSongTitle;
+/// artwork of the current song
+@property (strong, nonatomic) UIImage *currentArtwork;
+/// index in playlist of the current song
+@property int currentSongIndex;
+/// amount of files in playlist
+@property int playListAmountOfFiles;
+/// is the player playing or not
+@property BOOL isPlaying;
+/// images used if played song has no album artwork
+@property (strong, nonatomic) NSMutableArray *noAlbumArtworkImages;
+
+// Actions
 
 - (void) play;
 - (void) pause;

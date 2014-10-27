@@ -9,21 +9,15 @@
 #import "MMViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MMMusicPlayerSongTableViewCell.h"
-#import "MMCustomizePlaylistViewController.h"
 
 @interface MMViewController ()
 
-@property (strong, nonatomic) MMCustomizePlaylistViewController *customizePlaylistViewController; // MMCustomizePlaylistViewController
-@property (strong, nonatomic) id timeObserver; // timeObserver for used AVPlayer
-@property CGPoint panXY; // point value needed for correct pan calculation
-@property BOOL panOverride; // value needed for correct pan calculation
-@property BOOL playNextSong; // value needed for correct pan calculation
-@property BOOL skipSeconds; // value needed for correct pan calculation
-@property BOOL showHelpOverlay; // state for help overlay (hidden or visible)
-@property UIBackgroundTaskIdentifier bgTaskId; // task identifier used for playing music in background
+/// MMCustomizePlaylistViewController
+@property (strong, nonatomic) MMCustomizePlaylistViewController *customizePlaylistViewController;
 
 @end
 
+/// main view controller, includes music playing area and visual playlist
 @implementation MMViewController
 
 - (void)viewDidLoad
@@ -207,8 +201,7 @@
 
 }
 
-// one finger, tab
-// play/ pause music
+/// one finger, tab delegate, play/ pause music
 - (void) oneFingerTab:(UITapGestureRecognizer *)recognizer
 {
     if (self.audioManager.isPlaying) {
@@ -220,8 +213,7 @@
     [self updateView];
 }
 
-// one finger, pan
-// used for volume configuration (up/down) and switch songs (play previous/next song)
+/// one finger, pan delegate, used for volume configuration (up/down) and switch songs (play previous/next song)
 - (void)oneFingerPan:(UIPanGestureRecognizer *)recognizer 
 {
 
@@ -275,8 +267,7 @@
     }
 }
 
-// two finger, pan
-// used for fast-forward and fast-backward the played song
+/// two finger, pan delegate, used for fast-forward and fast-backward the played song
 - (void)twoFingerPan:(UIPanGestureRecognizer *)recognizer
 {
     // where the user touches the screen
@@ -325,14 +316,14 @@
     
 }
 
-//generate and set new playlist
+/// generate and set new playlist
 - (IBAction)buttonNewPlaylistPressed:(id)sender {
     self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :self.audioManager.playListAmountOfFiles];
     //set notofication that new playlist is generated
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
 }
 
-// if pressed the help overlay switch state between visible and hidden
+/// if pressed the help overlay switch state between visible and hidden
 - (IBAction)buttonHelpPressed:(id)sender {
     
     if(self.showHelpOverlay)
@@ -343,7 +334,7 @@
     [self updateView];
 }
 
-// if pressed the help overlay switch state between visible and hidden
+/// if pressed the help overlay switch state between visible and hidden
 - (IBAction)buttonBackToMainViewPressed:(id)sender {
     if(self.showHelpOverlay)
         self.showHelpOverlay = false;
@@ -353,13 +344,13 @@
     [self updateView];
 }
 
-// returns number of cells in tableView
+/// returns number of cells in tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.audioManager.playList.count;
 }
 
-// fill in tableView with cells
+/// fill in tableView with cells
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"MusicPlayerSongTableCell";
     
@@ -392,7 +383,7 @@
     return cell;
 }
 
-// if user select a table view row
+/// if user select a table view row
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // play selected song
@@ -402,14 +393,14 @@
     [self updateView];
 }
 
-// override to support conditional editing of the table view cells, default is NO
+/// override to support conditional editing of the table view cells, default is NO
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
 
 
-// Action if table row action is selected
+/// Action if table row action is selected
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // if tablerow action delete is selected
@@ -438,7 +429,7 @@
     }
 }
 
-// updates view
+/// updates view
 - (void) updateView
 {
     // if there is at leat 1 song in playlist
@@ -503,8 +494,8 @@
             [self.durationOutlet setHidden:true];
         
         // update progress outlet
-        if([self.progressViewOutlet isHidden])
-            [self.progressViewOutlet setHidden:false];
+        if([self.progressViewOutlet isHidden]==false)
+            [self.progressViewOutlet setHidden:true];
         
     }
     
@@ -521,11 +512,11 @@
     }
 }
 
-// timeObserver for audio player, used for updating the duration label and the progressView
+/// timeObserver for audio player, used for updating the duration label and the progressView
 -(id) generateTimeObserver {
-    //7
+
     __block MMViewController * weakSelf = self;
-    //8
+
     id timeObserver = [self.audioManager.audioPlayer addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1)
                                                    queue:NULL
                                               usingBlock:^(CMTime time) {
@@ -549,7 +540,7 @@
     
 }
 
-// set Background Task Identifier for playing songs in background
+/// set Background Task Identifier for playing songs in background
 - (void) setBackgroundTaskIdentifier
 {
     UIBackgroundTaskIdentifier newTaskId = UIBackgroundTaskInvalid;
@@ -561,14 +552,14 @@
     self.bgTaskId = newTaskId;
 }
 
-// if audioManager plays a song to end
+/// called if audioManager plays a song to end
 - (void) playerItemDidReachEnd
 {
     [self.audioManager playNext];
     [self updateView];
 }
 
-// if new playlist is generated/set
+/// called if new playlist is generated/set
 - (void) newPlaylistGenerated
 {
  

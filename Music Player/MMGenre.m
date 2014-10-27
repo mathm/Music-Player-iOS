@@ -8,6 +8,7 @@
 
 #import "MMGenre.h"
 
+/// Genre is an object that includes a list of songs that belong to this genre and some additional information like genre name
 @implementation MMGenre
 
 - (id) init
