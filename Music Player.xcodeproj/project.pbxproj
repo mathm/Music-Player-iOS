@@ -30,7 +30,7 @@
 		C793216019E2D065006E4C8E /* MMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C793215F19E2D065006E4C8E /* MMTabBarController.m */; };
 		C797A78019FD7FB700C84913 /* question-25.png in Resources */ = {isa = PBXBuildFile; fileRef = C797A77F19FD7FB700C84913 /* question-25.png */; };
 		C797A78419FD81E200C84913 /* question-25_white.png in Resources */ = {isa = PBXBuildFile; fileRef = C797A78319FD81E200C84913 /* question-25_white.png */; };
-		C797A78A19FDA9F100C84913 /* help_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C797A78919FDA9F100C84913 /* help_overlay.png */; };
+		C7991EDA19FFD42700A2FCB7 /* help_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C7991ED919FFD42700A2FCB7 /* help_overlay.png */; };
 		C79EFB0919EC181C00302103 /* MusicPlayerSongTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C79EFB0819EC181C00302103 /* MusicPlayerSongTableCell.xib */; };
 		C79EFB0C19EC196700302103 /* MMMusicPlayerSongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C79EFB0B19EC196700302103 /* MMMusicPlayerSongTableViewCell.m */; };
 		C79EFB2219EF01DF00302103 /* no_artwork 600x600 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C79EFB1C19EF01DF00302103 /* no_artwork 600x600 1.jpg */; };
@@ -91,7 +91,7 @@
 		C793215F19E2D065006E4C8E /* MMTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTabBarController.m; sourceTree = "<group>"; };
 		C797A77F19FD7FB700C84913 /* question-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "question-25.png"; sourceTree = "<group>"; };
 		C797A78319FD81E200C84913 /* question-25_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "question-25_white.png"; sourceTree = "<group>"; };
-		C797A78919FDA9F100C84913 /* help_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help_overlay.png; sourceTree = "<group>"; };
+		C7991ED919FFD42700A2FCB7 /* help_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help_overlay.png; sourceTree = "<group>"; };
 		C79EFB0819EC181C00302103 /* MusicPlayerSongTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerSongTableCell.xib; sourceTree = "<group>"; };
 		C79EFB0A19EC196700302103 /* MMMusicPlayerSongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMusicPlayerSongTableViewCell.h; sourceTree = "<group>"; };
 		C79EFB0B19EC196700302103 /* MMMusicPlayerSongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMusicPlayerSongTableViewCell.m; sourceTree = "<group>"; };
@@ -240,9 +240,9 @@
 				C79EFB0D19EEF78300302103 /* no_album_artwork */,
 				C7F3E5D619D9898400220E81 /* blackbox.jpg */,
 				C797A78319FD81E200C84913 /* question-25_white.png */,
-				C797A78919FDA9F100C84913 /* help_overlay.png */,
 				C7F3E5E419DAD9E100220E81 /* pause_icon.png */,
 				C7F3E5E519DAD9E100220E81 /* play_icon.png */,
+				C7991ED919FFD42700A2FCB7 /* help_overlay.png */,
 				C797A77F19FD7FB700C84913 /* question-25.png */,
 				C7F3E5DE19DAD79A00220E81 /* playlist_tab_bar_icon.png */,
 				C7F3E5DF19DAD79A00220E81 /* music_tab_bar_icon.png */,
@@ -355,7 +355,7 @@
 				C797A78019FD7FB700C84913 /* question-25.png in Resources */,
 				C7F3E5E219DAD79A00220E81 /* playlist_tab_bar_icon.png in Resources */,
 				C73DB56719C9DB0500BE1459 /* InfoPlist.strings in Resources */,
-				C797A78A19FDA9F100C84913 /* help_overlay.png in Resources */,
+				C7991EDA19FFD42700A2FCB7 /* help_overlay.png in Resources */,
 				C7F3E5E719DAD9E100220E81 /* play_icon.png in Resources */,
 				C79EFB2619EF01DF00302103 /* no_artwork 600x600 5.jpg in Resources */,
 				C73DB57019C9DB0500BE1459 /* Main.storyboard in Resources */,
