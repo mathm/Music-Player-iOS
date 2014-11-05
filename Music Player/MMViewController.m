@@ -318,9 +318,12 @@
 
 /// generate and set new playlist
 - (IBAction)buttonNewPlaylistPressed:(id)sender {
+    
     self.audioManager.playList = [self.customizePlaylistViewController generateNewPlaylist:self.genreList :self.audioManager.playListAmountOfFiles];
+
     //set notofication that new playlist is generated
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MMCustomizePlaylistNewPlaylistGeneratedNotification" object:self];
+    
 }
 
 /// if pressed the help overlay switch state between visible and hidden

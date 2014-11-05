@@ -181,6 +181,7 @@
         [self.textfieldFiles resignFirstResponder];
     }
     
+    
     // generate and set new playlist
     self.viewController.audioManager.playList = [self generateNewPlaylist:self.viewController.genreList :self.viewController.audioManager.playListAmountOfFiles];
     
